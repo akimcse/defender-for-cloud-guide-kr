@@ -1,7 +1,5 @@
 <!-- docsify sidebar -->
 
-- [🏠 홈](/)
-
 - **Part 1 · 시작하기**
   - [00 · 개요](00-overview.md)<span class="t">7분</span>
   - [01 · 사전 준비](01-prerequisites.md)<span class="t">11분</span>
