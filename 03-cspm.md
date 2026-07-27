@@ -4,23 +4,23 @@
 
 > [!NOTE]
 > **이 페이지에서 얻는 것**
-> - 무료 기초 CSPM과 유료 Defender CSPM의 **완전한 기능 경계**
+> - 무료 기본 CSPM과 유료 Defender CSPM의 **완전한 기능 경계**
 > - 보안 점수·권장사항·정책이 실제로 어떻게 동작하는지
 > - 클라우드 보안 그래프·공격 경로·보안 탐색기·DSPM·CIEM·AI-SPM 심화
 > - 거버넌스와 규정 준수로 운영을 마무리하는 법
 >
 > ⏱️ 예상 소요 **15분**　·　🎯 대상: 클라우드 보안 엔지니어, 보안 관리자, CISO
 
-CSPM은 **"내 리소스가 올바르게 구성됐는가?"** 에 답하는 축입니다. Defender for Cloud는 이를 **무료 기초 CSPM**과 **유료 Defender CSPM** 두 계층으로 제공합니다. 이 페이지는 두 계층의 기능을 세부까지 다룹니다.
+CSPM은 **"내 리소스가 올바르게 구성됐는가?"** 에 답하는 축입니다. Defender for Cloud는 이를 **무료 기본 CSPM**과 **유료 Defender CSPM** 두 계층으로 제공합니다. 이 페이지는 두 계층의 기능을 세부까지 다룹니다.
 
 > [!IMPORTANT]
 > 이 페이지의 상당수 고급 기능(공격 경로, 보안 탐색기, DSPM, CIEM, AI-SPM, 거버넌스, 규정 준수 표준, 위험 우선순위화)은 **Defender CSPM(유료)** 이 필요합니다. 무료로 쓸 수 있는 범위는 §1 표에서 명확히 구분합니다.
 
 ---
 
-## 1. 무료 기초 CSPM vs 유료 Defender CSPM
+## 1. 무료 기본 CSPM vs 유료 Defender CSPM
 
-| 기능 | 기초 CSPM (무료) | Defender CSPM (유료) |
+| 기능 | 기본 CSPM (무료) | Defender CSPM (유료) |
 | --- | :---: | :---: |
 | 자산 인벤토리 | ✅ | ✅ |
 | 데이터 내보내기(SIEM 등) · Workbooks | ✅ | ✅ |
@@ -233,7 +233,7 @@ flowchart LR
     class GRAPH,AP,EXP,CIEM,SCAN,DSPM,AISPM,EASM,GOV paid;
 ```
 
-> 🟩 초록 = 무료 기초 CSPM · 🟦 파랑 = Defender CSPM(유료)
+> 🟩 초록 = 무료 기본 CSPM · 🟦 파랑 = Defender CSPM(유료)
 
 ---
 

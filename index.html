@@ -148,6 +148,10 @@
       background: #f3f7fc; color: #33465c; font-weight: 700;
       text-align: left; border: 0; border-bottom: 1px solid var(--line);
     }
+    /* respect markdown column alignment (| :-- | --: |) on header cells */
+    .markdown-section th[align="right"] { text-align: right; }
+    .markdown-section th[align="center"] { text-align: center; }
+    .markdown-section th[align="left"] { text-align: left; }
     .markdown-section td { border: 0; border-bottom: 1px solid var(--line-soft); }
     .markdown-section tr:last-child td { border-bottom: 0; }
     .markdown-section tbody tr:nth-child(2n) { background: #fafcfe; }

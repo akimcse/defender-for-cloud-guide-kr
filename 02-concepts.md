@@ -94,9 +94,6 @@ Azure 및 멀티클라우드(Azure·AWS·GCP)를 위한 Microsoft의 **규범적
 - **공격 경로 분석(Attack Path Analysis)** — 그래프를 순회해 **외부 진입점에서 핵심 자산까지의 실제 악용 가능한 경로**를 자동 식별합니다. **능동 도달성 검증(active reachability)** 으로 실제 외부에서 도달 가능한지 확인해 오탐을 줄입니다. VM·스토리지·컨테이너·서버리스·API·AI 에이전트 등을 포괄합니다.
 - **클라우드 보안 탐색기(Cloud Security Explorer)** — 그래프에 대해 **대화형 경로 탐색 쿼리**를 만들어 위험을 능동적으로 헌팅하는 쿼리 빌더입니다.
 
-> "An attack path is a series of steps a potential attacker uses to breach your environment and access your assets."
-> — [Microsoft Learn](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-attack-path)
-
 참고: [공격 경로 분석](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-attack-path)
 
 ## 6. 보안 경고 (Alerts) · 인시던트 (Incidents)
@@ -165,7 +162,7 @@ MDC 보안 이벤트에 반응해 **Azure Logic Apps(소비 계층)** 를 트리
 | 답하는 질문 | "내 리소스가 올바르게 구성됐는가?" | "지금 누가 공격하고 있는가?" |
 | 산출물 | 권장사항, 규정 준수 점수, 태세 지표 | 보안 경고, 인시던트 상관 |
 | 시점 | 지속 평가(구성 상태) | 실시간/준실시간 위협 탐지 |
-| 주요 플랜 | 기초 CSPM(무료) 또는 Defender CSPM(유료) | 워크로드별 Defender 플랜 |
+| 주요 플랜 | 기본 CSPM(무료) 또는 Defender CSPM(유료) | 워크로드별 Defender 플랜 |
 | 조치 계기 | 구성 오류/정책 위반 | 비정상·악의적 행위 |
 
 두 가지 모두 **DevSecOps**와 함께 **CNAPP**를 구성합니다(→ [00 · 개요](./00-overview.md)).

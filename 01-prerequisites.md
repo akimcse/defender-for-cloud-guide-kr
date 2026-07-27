@@ -4,7 +4,7 @@
 
 > [!NOTE]
 > **이 페이지에서 얻는 것**
-> - 무료 기초 CSPM과 유료 Defender 플랜의 차이, 그리고 전체 플랜 목록
+> - 기본 MDC 기능과 유료 Defender 플랜의 차이, 그리고 전체 플랜 목록
 > - Azure·AWS·GCP·온프렘(Arc) 온보딩 경로
 > - Defender for Cloud를 다루는 데 필요한 **Azure RBAC 역할**
 > - **Microsoft Defender XDR 통합**에 필요한 권한·조건
@@ -12,33 +12,26 @@
 >
 > ⏱️ 예상 소요 **11분**　·　🎯 대상: 보안/IT 관리자, 도입 담당자, 클라우드 엔지니어
 
-Defender for Cloud를 사용하려면 **① 구독에서 MDC 열기(무료 CSPM 자동 활성화) → ② 필요한 유료 플랜 켜기 → ③ 멀티클라우드/온프렘 커넥터 구성 → ④ 역할 부여**가 필요합니다. 이 페이지는 온보딩 사전 준비를 정리합니다.
-
-> [!IMPORTANT]
-> **기초 CSPM은 무료이며, Azure 포털에서 Microsoft Defender for Cloud를 여는 순간 해당 구독에 자동으로 활성화됩니다.** 유료 Defender 플랜은 **환경 설정(Environment settings)** 에서 구독(또는 워크스페이스)별로 켭니다.
-> 참고: [Azure 구독 연결](https://learn.microsoft.com/en-us/azure/defender-for-cloud/connect-azure-subscription)
+Defender for Cloud를 사용하려면 **① 구독에서 MDC 열기(기본 CSPM 자동 활성화) → ② 필요한 유료 플랜 켜기 → ③ 멀티클라우드/온프렘 커넥터 구성 → ④ 역할 부여**가 필요합니다. 이 페이지는 온보딩 사전 준비를 정리합니다.
 
 ---
 
 ## 1. 활성화 기본 — 무료 vs 유료
 
-### 무료: 기초 CSPM (자동)
+### 무료: MDC 기본 기능 (자동)
 
-Azure 포털에서 **Microsoft Defender for Cloud**를 열면, 해당 구독은 다음에 무료로 등록됩니다.
+Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세 관리)** 과 **Microsoft Defender XDR 접근**이 자동으로 제공됩니다. 아래 기능이 여기에 포함되며, 공격 경로 분석·DSPM·워크로드 위협 탐지 같은 심화 기능은 유료 플랜(**Defender CSPM** 또는 워크로드 Defender 플랜)에서 제공됩니다.
 
 - 보안 점수(Secure Score)
 - 자산 인벤토리(Asset inventory)
 - 보안 권장사항(Recommendations)
 - Workbooks
 - 규정 준수 — **Microsoft 클라우드 보안 벤치마크(MCSB)**
-- Microsoft Defender XDR 접근(무료)
+- Microsoft Defender XDR 접근
 
-> "Defender for Cloud includes foundational CSPM capabilities and access to Microsoft Defender XDR for free."
-> — [Microsoft Learn](https://learn.microsoft.com/en-us/azure/defender-for-cloud/connect-azure-subscription)
+참고: [Azure 구독 연결](https://learn.microsoft.com/en-us/azure/defender-for-cloud/connect-azure-subscription)
 
 ### 유료: Defender 플랜 (30일 무료 체험)
-
-> "You can try Defender for Cloud for free for the first 30 days, or until the usage limit for certain plans is reached, whichever comes first."
 
 - 대부분의 유료 플랜은 **첫 30일 무료 체험**(또는 사용 한도 도달 시점까지).
 - **예외:** Defender for Storage의 **악성코드 스캔(Malware scanning)** 은 체험에 포함되지 않고 **첫날부터 과금**됩니다.
@@ -65,7 +58,7 @@ Azure 포털에서 **Microsoft Defender for Cloud**를 열면, 해당 구독은 
 
 | 플랜 | 보호 대상 · 핵심 | 상태 |
 | --- | --- | --- |
-| **기초 CSPM** (무료) | 자산 인벤토리, 보안 점수, MCSB 권장/규정 준수, 멀티클라우드 커버리지, DevOps 기본 권장 | GA |
+| **기본 CSPM** (무료) | 자산 인벤토리, 보안 점수, MCSB 권장/규정 준수, 멀티클라우드 커버리지, DevOps 기본 권장 | GA |
 | **Defender CSPM** (유료) | 에이전트리스 취약성/시크릿 스캔, **공격 경로 분석**, 클라우드 보안 탐색기, DSPM, AI-SPM, 거버넌스 규칙, 위험 우선순위화, EASM, PR 주석 | GA |
 | **Defender for Servers** — Plan 1 | Windows/Linux VM용 EDR(MDE 통합), 에이전트 기반 취약성 스캔, 소프트웨어 인벤토리 | GA |
 | **Defender for Servers** — Plan 2 | P1 + 에이전트리스 취약성/악성코드/시크릿 스캔, DNS 경고, OS 기준선 평가, **FIM**, **JIT VM 액세스**, 일 500MB 무료 수집 | GA |
@@ -160,8 +153,6 @@ Defender for Cloud는 **Azure RBAC**를 사용합니다. 전용 역할 2종과 �
 
 ### 온프렘 / 기타 클라우드 — Azure Arc (권장)
 
-> "To protect on-premises machines, we recommend onboarding on-premises machines as Azure Arc VMs."
-
 - Azure Arc로 연결하면 온프렘 머신이 **Azure VM처럼 MDC에 표시**됩니다.
 - AWS·GCP 커넥터는 EC2/GCE의 **Arc 배포를 자동 처리**합니다.
 - Arc 없이 직접 온보딩(direct onboarding) 시 **Defender for Servers Plan 2의 전체 기능에 접근할 수 없습니다.**
@@ -220,7 +211,7 @@ Defender for Cloud를 켜면 경고·인시던트가 **Microsoft Defender 포털
 
 ## 사전 준비 체크리스트
 
-- [ ] 보호할 **Azure 구독** 확인, MDC 열어 기초 CSPM(무료) 활성화
+- [ ] 보호할 **Azure 구독** 확인, MDC 열어 기본 CSPM(무료) 활성화
 - [ ] 필요한 **유료 Defender 플랜** 결정(Servers/Storage/Databases/Containers/…) 및 30일 체험 인지
 - [ ] **Owner / Security Admin / Contributor** 역할 배분 (플랜 전체 기능은 Owner 필요)
 - [ ] 멀티클라우드 대상 시: **AWS/GCP 커넥터** 사전 요건(Contributor, CIEM용 추가 권한) 확보

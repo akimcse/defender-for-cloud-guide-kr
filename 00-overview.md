@@ -49,7 +49,7 @@ Defender for Cloud는 세 가지 축을 하나로 묶습니다. **Part 2에는 �
 
 Defender for Cloud는 Azure 구독, AWS 계정, GCP 프로젝트를 보안 표준에 맞춰 **지속적으로 평가**하고, 구성 오류·위험을 줄이는 **보안 권장사항**을 제공합니다. CSPM은 두 계층으로 제공됩니다.
 
-- **기본 CSPM(Foundational CSPM, 무료)** — 보안 점수, 자산 인벤토리, 보안 권장사항, 멀티클라우드 커버리지, 중앙 정책 관리. **온보딩 시 기본 활성화.**
+- **기본 CSPM(무료)** — 보안 점수, 자산 인벤토리, 보안 권장사항, 멀티클라우드 커버리지, 중앙 정책 관리. **온보딩 시 기본 활성화.**
 - **Defender CSPM(유료)** — 에이전트리스 취약성 스캔, **공격 경로 분석**, 클라우드 보안 탐색기/그래프, 데이터 보안 태세 관리(DSPM), 규정 준수 평가, AI 보안 태세, 거버넌스 규칙, 위험 우선순위화 등.
 
 참고: [CSPM 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-cloud-security-posture-management)
@@ -144,17 +144,17 @@ Defender for Cloud의 처리 흐름은 다음과 같습니다.
 - **Azure Policy** — 각 MCSB 권장사항은 Azure Policy 정의로 매핑되어 평가를 뒷받침합니다.
 - **무료 vs 유료** — 기본 CSPM(무료)은 태세 가시성을, 유료 플랜은 공격 경로·규정 준수·런타임 위협 탐지를 제공합니다.
 
-참고: [에이전트리스 스캔](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-agentless-data-collection) · [보안 점수](https://learn.microsoft.com/en-us/azure/defender-for-cloud/secure-score-security-controls)
+참고: [에이전트리스 스캔](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-agentless-data-collection) · [모니터링 구성 요소(에이전트/데이터 수집)](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components) · [AWS 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-aws) · [GCP 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-gcp) · [온프렘/Arc 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-machines) · [보안 점수·MCSB 평가](https://learn.microsoft.com/en-us/azure/defender-for-cloud/secure-score-security-controls) · [보안 정책·Azure Policy](https://learn.microsoft.com/en-us/azure/defender-for-cloud/security-policy-concept) · [보안 경고(위협 탐지)](https://learn.microsoft.com/en-us/azure/defender-for-cloud/alerts-overview) · [클라우드 보안 그래프·공격 경로](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-attack-path) · [워크플로 자동화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/workflow-automation) · [Defender XDR 통합](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-integration-365)
 
 ## 주요 기능 및 가치
 
 | 성과 | 설명 | 필요 플랜 |
 | --- | --- | --- |
-| **보안 점수(Secure Score)** | 보안 상태를 단일 지표로 집계 — 높을수록 위험 낮음 | 기본 CSPM(무료) |
+| **보안 점수(Secure Score)** | 보안 상태를 단일 지표로 집계 — 높을수록 위험 낮음 | 기본 CSPM |
 | **보안 경고·인시던트** | 워크로드 플랜이 위협 탐지, 관련 경고를 인시던트로 상관 | 유료 워크로드 플랜 |
 | **공격 경로 분석** | 클라우드 보안 그래프로 외부에서 핵심 자산까지의 악용 경로 식별 | Defender CSPM |
-| **규정 준수** | NIST·PCI DSS·ISO 27001·CIS 등 표준 대비 지속 평가 | Defender CSPM(전체) |
-| **DevOps 보안** | 코드 투 클라우드 가시성, PR 주석 | 무료 + 유료 |
+| **규정 준수** | NIST·PCI DSS·ISO 27001·CIS 등 표준 대비 지속 평가 | Defender CSPM |
+| **DevOps 보안** | 코드 투 클라우드 가시성, PR 주석 | 기본 CSPM / Defender CSPM |
 
 > [!NOTE]
 > Defender for Cloud는 **AI/생성형 AI 워크로드**까지 CNAPP 범위를 확장했습니다 — AI 보안 태세 관리(AI-SPM)와 AI 위협 보호(프롬프트 인젝션·탈옥·데이터 유출 탐지). ([참고](https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-threat-protection))
@@ -177,6 +177,10 @@ Part 2에서 3대 축을 각각 깊이 다루고, Part 3에서 실제 포털 실
 - [CSPM 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-cloud-security-posture-management)
 - [DevOps 보안 소개](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-devops-introduction)
 - [멀티클라우드 보안 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/plan-multicloud-security-get-started)
+- 온보딩: [AWS](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-aws) · [GCP](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-gcp) · [온프렘/Arc](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-machines)
+- 데이터 수집: [에이전트리스 스캔](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-agentless-data-collection) · [모니터링 구성 요소](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components)
+- 평가·탐지: [보안 점수·MCSB](https://learn.microsoft.com/en-us/azure/defender-for-cloud/secure-score-security-controls) · [보안 정책·Azure Policy](https://learn.microsoft.com/en-us/azure/defender-for-cloud/security-policy-concept) · [보안 경고](https://learn.microsoft.com/en-us/azure/defender-for-cloud/alerts-overview)
+- 컨텍스트·조치: [클라우드 보안 그래프·공격 경로](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-attack-path) · [워크플로 자동화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/workflow-automation)
 - [Defender XDR 통합](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-integration-365)
 
 ---

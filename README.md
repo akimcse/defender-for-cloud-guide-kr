@@ -66,7 +66,7 @@ flowchart LR
 | 페이지 | 이 페이지의 핵심 | 소요 |
 | --- | --- | --- |
 | [**00 · 개요**](./00-overview.md) | CNAPP의 정의, 3대 축(CSPM·CWP·DevSecOps), 멀티클라우드/하이브리드, Defender 포털·XDR 통합, 동작 원리 | 7분 |
-| [**01 · 사전 준비**](./01-prerequisites.md) | 무료 CSPM vs 유료 플랜, 전체 Defender 플랜 목록, 온보딩(Azure·AWS·GCP·Arc), **역할·RBAC**, 데이터 지역 | 11분 |
+| [**01 · 사전 준비**](./01-prerequisites.md) | 기본 CSPM vs Defender 플랜, 전체 Defender 플랜 목록, 온보딩(Azure·AWS·GCP·Arc), **역할·RBAC**, 데이터 지역 | 11분 |
 | [**02 · 핵심 개념**](./02-concepts.md) | 보안 점수·권장사항·정책/MCSB·클라우드 보안 그래프/공격 경로·경고/인시던트·규정 준수·워크플로 자동화 등 | 10분 |
 
 ### Part 2 · 핵심 기능 — _실제로 무엇을 할 수 있는가_
