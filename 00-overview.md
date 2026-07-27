@@ -117,6 +117,9 @@ Defender for Cloud는 **두 포털**에서 접근합니다.
 - **고급 헌팅(Advanced hunting)** 이 `CloudAuditEvents`, `CloudProcessEvents`, `CloudStorageAggregatedEvents` 테이블로 확장됩니다.
 - 알림 피로를 줄이기 위해 **정보성(Informational) 경고는 Defender 포털로 통합되지 않습니다**(설계상).
 
+> [!NOTE]
+> **XDR 통합 사전 요구사항** — ① Azure 구독에 Defender for Cloud 활성화, ② Defender 포털에서 보이는 경고는 **활성화된 Defender 플랜에 따라** 달라짐, ③ **Defender XDR 통합 RBAC** 역할(또는 Entra ID **전역 관리자·보안 관리자**)이 있어야 경고·상관을 조회할 수 있습니다. 자세한 요건은 [01 · 사전 준비](./01-prerequisites.md)를 참고하세요.
+
 참고: [Defender XDR 통합](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-integration-365)
 
 ## 어떻게 동작하는가 (아키텍처)

@@ -7,6 +7,7 @@
 > - 무료 기초 CSPM과 유료 Defender 플랜의 차이, 그리고 전체 플랜 목록
 > - Azure·AWS·GCP·온프렘(Arc) 온보딩 경로
 > - Defender for Cloud를 다루는 데 필요한 **Azure RBAC 역할**
+> - **Microsoft Defender XDR 통합**에 필요한 권한·조건
 > - 데이터 지역·리전, 정부 클라우드 제약
 >
 > ⏱️ 예상 소요 **11분**　·　🎯 대상: 보안/IT 관리자, 도입 담당자, 클라우드 엔지니어
@@ -186,7 +187,25 @@ Defender for Cloud는 세 가지 방식으로 데이터를 수집합니다.
 
 참고: [모니터링 구성 요소](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components) · [Servers 데이터 워크스페이스 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/plan-defender-for-servers-data-workspace)
 
-## 6. 데이터 지역 · 리전 · 정부 클라우드
+## 6. Microsoft Defender XDR 통합 요구사항
+
+Defender for Cloud를 켜면 경고·인시던트가 **Microsoft Defender 포털(security.microsoft.com)** 의 통합 XDR 경험으로 자동 연동됩니다(→ [00 · 개요](./00-overview.md)). 이 통합을 실제로 조회·활용하려면 다음이 필요합니다.
+
+| 요구사항 | 내용 |
+| --- | --- |
+| **① Defender for Cloud 활성화** | Azure 구독에서 Defender for Cloud가 활성화되어 있어야 함 |
+| **② 플랜에 따른 경고 접근** | Defender 포털에서 보이는 경고는 **활성화된 Defender(워크로드) 플랜에 따라** 달라짐 — 유료 플랜이 있어야 해당 위협 경고가 표시 |
+| **③ 권한(RBAC)** | **Defender XDR 통합 RBAC** 역할을 적용해야 사용 가능. 이 역할 없이 보려면 Entra ID의 **전역 관리자(Global Administrator)** 또는 **보안 관리자(Security Administrator)** 필요 |
+
+> [!NOTE]
+> 경고·상관 조회 권한은 **테넌트 전체에 자동 부여**되며, **특정 구독만 제한 조회는 지원되지 않습니다.** 구독별로 보려면 경고·인시던트 큐에서 **`alert subscription ID` 필터**를 사용하세요.
+
+> [!TIP]
+> "Defender 포털에 경고가 안 보인다"는 대부분 ② 플랜 미활성 또는 ③ 권한 부족이 원인입니다. 도입 시 두 항목을 먼저 점검하세요.
+
+참고: [Defender XDR 통합](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-integration-365)
+
+## 7. 데이터 지역 · 리전 · 정부 클라우드
 
 - **자산 데이터 저장 위치**는 VM 지리에 따라 가장 가까운 워크스페이스로 라우팅됩니다. (예: **한국(Korea) → Asia Pacific**, 영국 → 영국, 유럽(영국 제외) → 유럽)
 - **태세 데이터**는 테넌트 위치 기준으로 저장됩니다(유럽 테넌트는 유럽 위치).
@@ -207,6 +226,7 @@ Defender for Cloud는 세 가지 방식으로 데이터를 수집합니다.
 - [ ] 멀티클라우드 대상 시: **AWS/GCP 커넥터** 사전 요건(Contributor, CIEM용 추가 권한) 확보
 - [ ] 온프렘 대상 시: **Azure Arc** 온보딩 계획(직접 온보딩 시 P2 제한 인지)
 - [ ] FIM·SQL on machines·무료 수집 필요 시 **Log Analytics 워크스페이스** 준비
+- [ ] **Defender XDR 통합** 조회 권한 확보(전역/보안 관리자 또는 XDR 통합 RBAC) 및 플랜별 경고 접근 인지
 - [ ] **데이터 지역/리전** 및 정부·중국 클라우드 제약 검토
 
 ---
