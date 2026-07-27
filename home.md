@@ -7,8 +7,6 @@
 > [!NOTE]
 > Defender for Cloud는 **CNAPP(Cloud Native Application Protection Platform)** 입니다. 즉 하나의 제품 안에 **CSPM(태세 관리) · CWP(워크로드 보호) · DevSecOps(코드 보안)** 세 축이 통합되어 있습니다. 이 코스의 Part 2는 이 세 축을 각각 한 문서로 나눠 깊이 다룹니다.
 
-🌐 **웹사이트로 보기 → [https://akimcse.github.io/defender-for-cloud-guide-kr/](https://akimcse.github.io/defender-for-cloud-guide-kr/)**
-
 ---
 
 ## 🚀 어디부터 시작할까요?
