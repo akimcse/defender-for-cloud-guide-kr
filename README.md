@@ -1,4 +1,4 @@
-# Microsoft Defender for Cloud 학습 가이드
+# Microsoft Defender for Cloud 가이드
 
 **클라우드 보안 태세부터 워크로드 방어·DevSecOps까지, 개념에서 실습까지 한 번에.**
 
@@ -36,27 +36,32 @@ flowchart LR
         B4["04 CWP"]
         B5["05 DevSecOps"]
     end
-    subgraph P3["Part 3 · 실습·활용·참조"]
-        C6["06 핸즈온 랩"] --> C7["07 실무 활용"] --> C99["99 부록"]
+    subgraph P3["Part 3 · 실습·활용"]
+        C6["06 핸즈온 랩"] --> C7["07 실무 활용"]
     end
     P1 --> P2 --> P3
 
     click A0 "./00-overview.md" "00 개요"
     click A1 "./01-prerequisites.md" "01 사전 준비"
     click A2 "./02-concepts.md" "02 핵심 개념"
+    click B3 "./03-cspm.md" "03 CSPM"
+    click B4 "./04-cwp.md" "04 CWP"
+    click B5 "./05-devsecops.md" "05 DevSecOps"
+    click C6 "./06-handson-lab.md" "06 핸즈온 랩"
+    click C7 "./07-use-cases.md" "07 실무 활용"
 
     classDef node fill:#eef4ff,stroke:#2f6fd6,color:#123,stroke-width:1px;
-    class A0,A1,A2,B3,B4,B5,C6,C7,C99 node;
+    class A0,A1,A2,B3,B4,B5,C6,C7 node;
 ```
 
 > [!TIP]
-> 위 다이어그램에서 회색 노드(Part 2·3)는 **작성 예정**입니다. 현재는 **Part 1**을 우선 공개합니다.
+> 위 다이어그램의 각 노드를 클릭하면 해당 페이지로 이동합니다. 전 과정(Part 1~3)이 공개되어 있습니다.
 
 ---
 
 ## 📚 전체 코스
 
-### Part 1 · 시작하기 — _무엇이고, 무엇이 필요한가_ ✅ 공개
+### Part 1 · 시작하기 — _무엇이고, 무엇이 필요한가_
 
 | 페이지 | 이 페이지의 핵심 | 소요 |
 | --- | --- | --- |
@@ -64,13 +69,13 @@ flowchart LR
 | [**01 · 사전 준비**](./01-prerequisites.md) | 무료 CSPM vs 유료 플랜, 전체 Defender 플랜 목록, 온보딩(Azure·AWS·GCP·Arc), **역할·RBAC**, 데이터 지역 | 11분 |
 | [**02 · 핵심 개념**](./02-concepts.md) | 보안 점수·권장사항·정책/MCSB·클라우드 보안 그래프/공격 경로·경고/인시던트·규정 준수·워크플로 자동화 등 | 10분 |
 
-### Part 2 · 핵심 기능 — _실제로 무엇을 할 수 있는가_ 🚧 작성 예정
+### Part 2 · 핵심 기능 — _실제로 무엇을 할 수 있는가_
 
 | 페이지 | 이 페이지의 핵심 | 소요 |
 | --- | --- | --- |
-| **03 · CSPM** | 보안 점수·권장사항·거버넌스·공격 경로·DSPM·규정 준수 등 태세 관리 심화 | — |
-| **04 · CWP** | Servers·Storage·Databases·Containers·App Service·Key Vault·APIs·AI 등 워크로드별 위협 보호 | — |
-| **05 · DevSecOps** | 코드 투 클라우드, GitHub·Azure DevOps·GitLab 커넥터, IaC/시크릿 스캔, PR 주석 | — |
+| [**03 · CSPM**](./03-cspm.md) | 보안 점수·권장사항·거버넌스·공격 경로·DSPM·CIEM·AI-SPM·규정 준수 등 태세 관리 심화 | 15분 |
+| [**04 · CWP**](./04-cwp.md) | Servers·Storage·Databases·Containers·App Service·Key Vault·Resource Manager·APIs·AI 등 워크로드별 위협 보호 | 15분 |
+| [**05 · DevSecOps**](./05-devsecops.md) | 코드 투 클라우드, GitHub·Azure DevOps·GitLab 커넥터, IaC/시크릿 스캔, PR 주석 | 13분 |
 
 ### Part 3 · 실습과 활용 — _직접 해보고, 현업에 적용하고, 막히면 찾아보기_
 
@@ -78,7 +83,6 @@ flowchart LR
 | --- | --- | --- |
 | [**06 · 핸즈온 랩**](./06-handson-lab.md) | 실제 포털에서 온보딩 → 보안 점수 → 권장사항 수정 → 규정 준수까지 30분 실습 | 30분 |
 | [**07 · 실무 활용**](./07-use-cases.md) | CSPM·CWP·DevSecOps **3대 축 데모 시나리오**(고객 데모용 한국어 내레이션) | 30분+ |
-| **99 · 부록** _(작성 예정)_ | 문제 해결 · FAQ · 알려진 제한 사항 | — |
 
 ---
 

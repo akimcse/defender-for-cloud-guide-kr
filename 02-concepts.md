@@ -1,4 +1,4 @@
-[🏠 전체 목차](./README.md)　·　**Part 1 · 시작하기**　·　페이지 3 / 9
+[🏠 전체 목차](./README.md)　·　**Part 1 · 시작하기**　·　페이지 3 / 8
 
 # 02 · 핵심 개념 — Defender for Cloud 용어 사전
 
@@ -238,6 +238,6 @@ flowchart TB
 
 | ◀ 이전 | ▶ 다음 |
 | :-- | --: |
-| [01 · 사전 준비](./01-prerequisites.md) | Part 2 · 03 CSPM _(작성 예정)_ |
+| [01 · 사전 준비](./01-prerequisites.md) | [03 · CSPM](./03-cspm.md) |
 
 [🏠 전체 목차로 돌아가기](./README.md)

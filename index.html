@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>Microsoft Defender for Cloud 학습 가이드</title>
+  <title>Microsoft Defender for Cloud 가이드</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Microsoft Defender for Cloud 학습 코스 — CSPM · CWP · DevSecOps를 개념부터 실습까지. Microsoft Learn 공식 문서 기반." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
   <style>
     :root {
+      --theme-color: #0f6cbd;   /* docsify 기본 초록 → 브랜드 블루로 덮기 */
       --brand: #0f6cbd;          /* Fluent primary */
       --brand-dark: #0a4f8f;
       --brand-2: #7b61ff;
@@ -41,33 +42,65 @@
       border-right: 1px solid var(--line);
       padding: 0;
     }
-    .sidebar > h1 { margin: 0; padding: 26px 24px 10px; }
+    .sidebar > h1 { margin: 0; padding: 20px 20px 14px; border-bottom: 1px solid var(--line-soft); }
     .sidebar > h1 .app-name-link {
-      font-size: 17px; font-weight: 800; color: var(--ink);
-      display: flex; align-items: center; gap: 8px; letter-spacing: -0.02em;
+      font-size: 16.5px; font-weight: 800; color: var(--ink);
+      display: flex; align-items: center; gap: 9px; letter-spacing: -0.02em;
     }
-    .sidebar-nav { padding: 8px 14px 40px; }
+    .sidebar > h1 .app-name-link img { vertical-align: middle; }
+    .sidebar-nav { padding: 10px 12px 40px; }
+    /* Home link → distinct pill button at top */
+    .sidebar-nav > ul > li:first-child {
+      margin-bottom: 6px; padding-bottom: 10px; border-bottom: 1px solid var(--line-soft);
+    }
+    .sidebar-nav > ul > li:first-child > a {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 9px; font-weight: 600; font-size: 14px;
+      color: var(--brand-dark); background: #eff5fc;
+    }
+    .sidebar-nav > ul > li:first-child > a:hover { background: #e3eefb; }
+    .sidebar-nav > ul > li:first-child.active > a { background: linear-gradient(90deg,#e6f0fb,#efeafe); }
     .sidebar-nav > ul > li strong,
     .sidebar-nav > ul > li > p strong {
       display: block;
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      font-size: 10.5px; font-weight: 700; text-transform: uppercase;
       letter-spacing: .08em; color: #96a1b2;
-      padding: 18px 10px 6px;
+      padding: 12px 10px 3px;
     }
     .sidebar-nav ul { list-style: none; margin: 0; padding: 0; }
-    .sidebar-nav li { margin: 2px 0; }
-    .sidebar-nav a {
-      display: block; padding: 8px 12px; border-radius: 9px;
-      color: var(--ink-soft); font-size: 14.5px; font-weight: 500;
-      text-decoration: none; transition: all .15s ease; border: 0; outline: none;
+    .sidebar-nav li { margin: 1px 0; }
+    /* leaf items: link + time badge on one row */
+    .sidebar-nav li:has(> a) {
+      display: flex; align-items: center; justify-content: space-between; gap: 6px;
+      padding-right: 10px; border-radius: 8px;
     }
-    .sidebar-nav a:hover { background: #f1f6fc; color: var(--brand); }
+    .sidebar-nav li:has(> a):hover { background: #f1f6fc; }
+    .sidebar-nav li.active:has(> a) { background: linear-gradient(90deg, #eaf3fc, #f3eefe); }
+    .sidebar-nav a {
+      flex: 1 1 auto; min-width: 0;
+      display: block; padding: 5px 10px; border-radius: 8px;
+      color: var(--ink-soft); font-size: 13.5px; font-weight: 500;
+      text-decoration: none; transition: color .12s ease; border: 0; outline: none;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sidebar-nav li:has(> a):hover a { color: var(--brand); background: transparent; }
     .sidebar-nav a:focus { outline: none; }
     .sidebar-nav li.active > a {
-      background: linear-gradient(90deg, #eaf3fc, #f3eefe);
-      color: var(--brand-dark); font-weight: 700;
-      border: 0; box-shadow: none;
+      color: var(--brand-dark); font-weight: 700; background: transparent;
+      border: 0 !important; box-shadow: none !important; outline: none !important;
     }
+    /* docsify 기본 테마의 활성 항목 테두리·아웃라인 완전 제거 */
+    .sidebar-nav a, .sidebar-nav a:hover, .sidebar-nav a:focus, .sidebar-nav a:active,
+    .sidebar-nav li > a, .sidebar-nav li.active > a {
+      border: 0 !important; outline: 0 !important; box-shadow: none !important;
+    }
+    /* reading-time badge (sibling of link, right-aligned) */
+    .sidebar-nav .t {
+      flex: none; font-size: 10.5px; font-weight: 600; color: #a3adbb;
+      background: #f0f3f8; border-radius: 20px; padding: 1px 7px;
+    }
+    .sidebar-nav li.active .t { color: var(--brand); background: #e3eefb; }
+    .sidebar-nav li:has(> a):hover .t { color: var(--brand); }
     /* dim the "예정" placeholders */
     .sidebar-nav li em { color: #b3bccb; font-style: normal; font-size: 12px; }
     .app-name { margin: 0; }
@@ -98,6 +131,15 @@
     }
     .markdown-section h3 {
       font-size: 16.5px; font-weight: 700; margin: 28px 0 10px; color: var(--brand-dark);
+    }
+    /* docsify wraps heading text in <a class="anchor"><span>…</span></a> and the vue
+       theme colors that span directly — force it to inherit our heading color */
+    .markdown-section h1 a, .markdown-section h1 a span,
+    .markdown-section h2 a, .markdown-section h2 a span,
+    .markdown-section h3 a, .markdown-section h3 a span,
+    .markdown-section h4 a, .markdown-section h4 a span {
+      color: inherit !important;
+      -webkit-text-fill-color: currentColor !important;
     }
     .markdown-section p, .markdown-section li { line-height: 1.75; color: #2b3542; }
     .markdown-section a { color: var(--brand); text-decoration: none; border-bottom: 1px solid transparent; }
@@ -177,10 +219,36 @@
     .rtoc a:hover { color: var(--brand); }
     .rtoc a.active { color: var(--brand-dark); font-weight: 700; border-left-color: var(--brand); }
 
-    /* Search box */
-    .search { border-bottom: 1px solid var(--line); margin: 0; }
-    .search input { border-radius: 9px; background: #f4f7fb; border: 1px solid var(--line); font-size: 14px; }
+    /* Search box + results */
+    .search { border-bottom: 1px solid var(--line); margin: 0; padding: 14px 16px; }
+    .search .input-wrap { margin: 0; }
+    .search input {
+      border-radius: 10px; background: #f4f7fb; border: 1px solid var(--line);
+      font-size: 14px; padding: 9px 12px; transition: border-color .15s, background .15s;
+    }
+    .search input:focus { background: #fff; border-color: var(--brand); outline: none; }
+    .search .clear-button { cursor: pointer; }
     .search .results-panel { font-size: 13px; }
+    .search .matching-post {
+      border: 0; border-bottom: 1px solid var(--line-soft);
+      padding: 12px 16px; transition: background .12s;
+    }
+    .search .matching-post:last-child { border-bottom: 0; }
+    .search .matching-post:hover { background: #f4f8fd; }
+    .search p.matching-post { border: 0; color: #8a94a4; }
+    .search .matching-post h2 {
+      font-size: 13.5px; font-weight: 700; color: var(--ink);
+      margin: 0 0 4px; letter-spacing: -0.01em; line-height: 1.35;
+    }
+    .search .matching-post p {
+      font-size: 12px; color: #6b7686; margin: 0; line-height: 1.55;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .search .search-keyword {
+      color: var(--brand-dark); background: #e3eefb; font-style: normal;
+      border-radius: 3px; padding: 0 3px; font-weight: 600;
+    }
+    .sidebar-nav > ul > li:first-child:hover { background: transparent; }
 
     /* Scrollbars */
     .sidebar::-webkit-scrollbar, .rtoc::-webkit-scrollbar { width: 8px; }
@@ -189,11 +257,141 @@
     @media (max-width: 768px) {
       .markdown-section { padding: 24px 18px 60px; }
     }
+
+    /* ============ Dark mode ============ */
+    html[data-theme="dark"] {
+      --brand: #57aef0;
+      --brand-dark: #8ecbf5;
+      --brand-2: #b39dff;
+      --ink: #eef2f8;
+      --ink-soft: #b9c3d0;
+      --line: #2a323d;
+      --line-soft: #232a34;
+      --bg: #12171f;
+      --bg-code: #1a212b;
+    }
+    html[data-theme="dark"] body { background: var(--bg); color: var(--ink); }
+    html[data-theme="dark"] .sidebar { background: #131922; border-right-color: var(--line); }
+    html[data-theme="dark"] .sidebar > h1 { border-bottom-color: var(--line); }
+    html[data-theme="dark"] .sidebar > h1 .app-name-link { color: var(--ink); }
+    html[data-theme="dark"] .sidebar-nav > ul > li:first-child > a { background: #17222f; color: var(--brand-dark); }
+    html[data-theme="dark"] .sidebar-nav > ul > li:first-child > a:hover { background: #1d2a3a; }
+    html[data-theme="dark"] .sidebar-nav li:has(> a):hover { background: #1a212b; }
+    html[data-theme="dark"] .sidebar-nav li.active:has(> a) { background: linear-gradient(90deg,#182636,#211d33); }
+    html[data-theme="dark"] .sidebar-nav .t { background: #222b36; color: #8c99a8; }
+    html[data-theme="dark"] .sidebar-nav li.active .t { background: #1d3247; color: var(--brand-dark); }
+    html[data-theme="dark"] .markdown-section h1 { border-bottom-color: var(--line); }
+    html[data-theme="dark"] .markdown-section h2 { border-bottom-color: var(--line); }
+    html[data-theme="dark"] .markdown-section p,
+    html[data-theme="dark"] .markdown-section li { color: #dbe2ec; }
+    html[data-theme="dark"] .markdown-section strong { color: #ffffff; }
+    html[data-theme="dark"] .markdown-section h3 { color: var(--brand-dark); }
+    html[data-theme="dark"] .markdown-section h1,
+    html[data-theme="dark"] .markdown-section h2 { color: #f4f7fb; }
+    html[data-theme="dark"] .markdown-section td { color: #dbe2ec; }
+    html[data-theme="dark"] .alert p:first-child { color: inherit; }
+    html[data-theme="dark"] .alert p, html[data-theme="dark"] .alert li { color: #e4e9f0; }
+    /* docsify mobile sidebar toggle bar */
+    html[data-theme="dark"] .sidebar-toggle { background: #131922; border-color: var(--line); }
+    html[data-theme="dark"] .sidebar-toggle .sidebar-toggle-button span { background: var(--ink-soft); }
+    html[data-theme="dark"] .markdown-section table { border-color: var(--line); }
+    html[data-theme="dark"] .markdown-section th { background: #1a212b; color: #cdd6e0; border-bottom-color: var(--line); }
+    html[data-theme="dark"] .markdown-section td { border-bottom-color: var(--line-soft); }
+    html[data-theme="dark"] .markdown-section tbody tr:nth-child(2n) { background: #141a22; }
+    html[data-theme="dark"] .markdown-section code { background: var(--bg-code); color: #ff9ecb; }
+    html[data-theme="dark"] .markdown-section pre { background: var(--bg-code); border-color: var(--line); }
+    html[data-theme="dark"] .markdown-section pre > code { color: #d4dbe4; }
+    html[data-theme="dark"] .markdown-section blockquote { background: #171e27; border-left-color: #3a4757; }
+    html[data-theme="dark"] .markdown-section blockquote p { color: #b3bdc9; }
+    /* callouts (dark) */
+    html[data-theme="dark"] .alert.note { border-color: #2b5378; background: #12202e; }
+    html[data-theme="dark"] .alert.note .label { color: #5aa9e6; }
+    html[data-theme="dark"] .alert.tip { border-color: #2f5e3f; background: #122117; }
+    html[data-theme="dark"] .alert.tip .label { color: #57bd78; }
+    html[data-theme="dark"] .alert.important { border-color: #4a3a7a; background: #1a1730; }
+    html[data-theme="dark"] .alert.important .label { color: #a48bff; }
+    html[data-theme="dark"] .alert.warning { border-color: #6b5320; background: #221c10; }
+    html[data-theme="dark"] .alert.warning .label { color: #d6a53d; }
+    html[data-theme="dark"] .alert.caution { border-color: #6e2f36; background: #241318; }
+    html[data-theme="dark"] .alert.caution .label { color: #f2727e; }
+    /* search (dark) */
+    html[data-theme="dark"] .search { border-bottom-color: var(--line); }
+    html[data-theme="dark"] .search input { background: #1a212b; border-color: var(--line); color: var(--ink); }
+    html[data-theme="dark"] .search input:focus { background: #10161d; border-color: var(--brand); }
+    html[data-theme="dark"] .search .matching-post { border-bottom-color: var(--line-soft); }
+    html[data-theme="dark"] .search .matching-post:hover { background: #182029; }
+    html[data-theme="dark"] .search .matching-post h2 { color: var(--ink); }
+    html[data-theme="dark"] .search .matching-post p { color: #97a2b0; }
+    html[data-theme="dark"] .search .search-keyword { background: #1d3247; color: #7cc0f0; }
+    /* badges (dark) */
+    html[data-theme="dark"] .badge.ga { background: #143021; color: #6bce8b; }
+    html[data-theme="dark"] .badge.preview { background: #33280d; color: #e0b155; }
+    /* right toc (dark) */
+    html[data-theme="dark"] .rtoc ul { border-left-color: var(--line); }
+    html[data-theme="dark"] .rtoc a { color: #7d8896; }
+    html[data-theme="dark"] .rtoc a.active { color: var(--brand-dark); border-left-color: var(--brand); }
+    /* mermaid stays on a light card for readability */
+    html[data-theme="dark"] .mermaid { background: #eef2f7; border-radius: 12px; padding: 14px; }
+    html[data-theme="dark"] .sidebar::-webkit-scrollbar-thumb,
+    html[data-theme="dark"] .rtoc::-webkit-scrollbar-thumb { background: #2c3541; }
+
+    /* ---- Dark: force-override docsify vue theme's dark text colors ---- */
+    html[data-theme="dark"] .sidebar-nav a,
+    html[data-theme="dark"] .sidebar ul li a { color: #ccd5e0 !important; }
+    html[data-theme="dark"] .sidebar-nav li.active > a,
+    html[data-theme="dark"] .sidebar ul li.active > a { color: var(--brand-dark) !important; }
+    html[data-theme="dark"] .sidebar-nav > ul > li:first-child > a { color: var(--brand-dark) !important; }
+    html[data-theme="dark"] .markdown-section h1,
+    html[data-theme="dark"] .markdown-section h1 a,
+    html[data-theme="dark"] .markdown-section h2,
+    html[data-theme="dark"] .markdown-section h2 a { color: #f4f7fb !important; }
+    html[data-theme="dark"] .markdown-section h3,
+    html[data-theme="dark"] .markdown-section h3 a { color: #cfe4fb !important; }
+    html[data-theme="dark"] .rtoc a { color: #aeb9c7 !important; }
+    html[data-theme="dark"] .rtoc a.active { color: #dcebfb !important; }
+    html[data-theme="dark"] .rtoc-title { color: #8b97a6 !important; }
+    html[data-theme="dark"] .sidebar-nav > ul > li strong { color: #8b97a6 !important; }
+
+    /* ============ Theme toggle button ============ */
+    #theme-toggle {
+      position: fixed; top: 14px; right: 18px; z-index: 60;
+      width: 38px; height: 38px; border-radius: 10px;
+      border: 1px solid var(--line); background: #ffffff; color: var(--ink-soft);
+      font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 1px 4px rgba(20,40,80,.08); transition: all .15s;
+    }
+    #theme-toggle:hover { color: var(--brand); border-color: var(--brand); }
+    html[data-theme="dark"] #theme-toggle { background: #1a212b; border-color: var(--line); }
+    @media (max-width: 768px) { #theme-toggle { top: auto; bottom: 16px; } }
   </style>
 </head>
 <body>
+  <button id="theme-toggle" title="라이트/다크 모드 전환" aria-label="테마 전환">🌙</button>
   <div id="app">불러오는 중…</div>
   <aside class="rtoc" id="rtoc"></aside>
+
+  <script>
+    // Dark mode: restore preference before render to avoid flash
+    (function () {
+      var saved = localStorage.getItem('dfc-theme');
+      var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      function paintBtn() {
+        var b = document.getElementById('theme-toggle');
+        if (b) b.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        paintBtn();
+        var b = document.getElementById('theme-toggle');
+        if (b) b.addEventListener('click', function () {
+          var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('dfc-theme', next);
+          paintBtn();
+        });
+      });
+    })();
+  </script>
 
   <script>
     window.$docsify = {
@@ -290,6 +488,23 @@
               });
             }, { rootMargin: '0px 0px -75% 0px', threshold: 0 });
             items.forEach(function (h) { spy.observe(h); });
+          });
+        },
+        // 4) Browser tab title — always "<페이지> — Defender for Cloud 가이드"
+        function (hook, vm) {
+          hook.doneEach(function () {
+            var site = 'Microsoft Defender for Cloud 가이드';
+            var h1 = document.querySelector('.markdown-section h1');
+            var t = h1 ? (h1.textContent || '').replace(/\s*#\s*$/, '').trim() : '';
+            var hash = (window.location.hash || '').replace(/^#/, '');
+            var isHome = (hash === '' || hash === '/' || hash === '/README' || hash === '/home');
+            if (!t) {
+              document.title = site;
+            } else if (isHome) {
+              document.title = t;              // 홈: 전체 문서 제목만
+            } else {
+              document.title = t + ' — ' + site;
+            }
           });
         }
       ]
