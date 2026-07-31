@@ -67,8 +67,8 @@ CSPM은 **"내 리소스가 올바르게 구성됐는가?"** 에 답하는 축�
 
 ## 3. 보안 권장사항 라이프사이클
 
-**표시 방식**: 평면 목록 / 제목별 그룹 / 리소스별 그룹.
-**카테고리 탭**: 전체 / 잘못된 구성(Misconfigurations) / 취약성(Vulnerabilities) / 노출된 시크릿(Exposed Secrets).
+- **표시 방식**: 평면 목록 / 제목별 그룹 / 리소스별 그룹.
+- **카테고리 탭**: 전체 / 잘못된 구성(Misconfigurations) / 취약성(Vulnerabilities) / 노출된 시크릿(Exposed Secrets).
 
 ### 수정(Remediation) 옵션
 
@@ -78,8 +78,14 @@ CSPM은 **"내 리소스가 올바르게 구성됐는가?"** 에 답하는 축�
 | **Enforce** 🔒 | 비준수 리소스 생성 시 정책 자동 배포(점수 하락 방지) |
 | **Deny** 🚫 | 문제를 가진 새 리소스 **생성 차단** |
 
+![권장사항 상세의 Take action 패널과 자동 수정 스크립트](assets/cspm/remediation.png)
+<small class="cap">권장사항 상세 → Remediate(Fix)·Delegate·Exempt, 자동 수정 스크립트 미리보기</small>
+
 ### 위험 우선순위화 (Defender CSPM)
 위험 수준(**Critical/High/Medium/Low/Not evaluated**)을 데이터 민감도·인터넷 노출·측면 이동·악용 가능성으로 산정합니다. Defender CSPM이 없으면 위험 열이 흐리게 표시됩니다. 권장사항의 **Graph 탭**에서 공격 경로 맥락을 볼 수 있습니다.
+
+![위험 기반 권장사항 목록 — 위험 수준·위험 요소·공격 경로 수 표시](assets/cspm/risk-recommendations.png)
+<small class="cap">위험 수준·위험 요소·연결된 공격 경로 수로 정렬된 멀티클라우드(Azure·AWS·GCP·GitHub) 권장사항</small>
 
 ### 예외(Exemption)
 
@@ -135,6 +141,12 @@ CSPM은 **"내 리소스가 올바르게 구성됐는가?"** 에 답하는 축�
 - **분류**: Microsoft Purview의 SIT·민감도 레이블 상속(커스텀 SIT 가져오기, 민감 임계값 설정)
 - **데이터 인식 공격 경로**: "인터넷 노출 → 민감 데이터 저장소 접근" 경로 시각화
 
+![데이터 민감도 설정 — 정보 유형·민감도 레이블 임계값](assets/cspm/data-sensitivity.png)
+<small class="cap">환경 설정 → Data sensitivity에서 조직의 민감 정보 유형(Finance·PII·Credentials 등)과 레이블 임계값 지정</small>
+
+![데이터 보안 대시보드 개요](assets/cspm/data-security-dashboard.png)
+<small class="cap">Data security 대시보드 — 데이터 자산·민감 리소스·커버리지, 고심각 경고·공격 경로가 걸린 데이터 리소스를 한눈에</small>
+
 참고: [데이터 보안 태세](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-data-security-posture)
 
 ## 7. 에이전트리스 스캔
@@ -181,6 +193,9 @@ VM 디스크 스냅샷을 대역 외로 분석 후 **수 분 내 삭제**합니�
 
 - **자동 평가 + 수동 증명**, **PDF/감사 보고서**(PCI·SOC·ISO 인증서), **지속 내보내기**, **Purview Compliance Manager 연동**
 - 주요 표준: MCSB, NIST CSF 2.0 / 800-53 / 800-171, PCI DSS v4, ISO 27001/27002/27017, CIS(Azure/AWS/GCP), SOC, GDPR, NIS2, DORA, EU AI Act, HITRUST, **k-ISMS-P(한국)** 등
+
+![규정 준수 대시보드 — MCSB 컨트롤별 자동 평가](assets/cspm/regulatory-compliance.png)
+<small class="cap">MCSB 등 표준의 컨트롤별 pass/fail과 자동 평가(Automated assessments), 컨트롤 상세의 Your Actions·실패 리소스 수</small>
 
 > [!TIP]
 > 한국 고객 데모·컨설팅에서는 **k-ISMS-P**, **ISO/IEC 27001:2022**, **PCI DSS**를 표준으로 추가해 보여 주면 전달력이 높습니다.

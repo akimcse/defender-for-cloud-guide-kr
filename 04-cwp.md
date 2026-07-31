@@ -16,34 +16,16 @@ CWP는 **"지금 누가 내 리소스를 공격하고 있는가?"** 에 답하�
 
 ## 1. Defender for Servers (Plan 1 · Plan 2)
 
-**보호 대상**: Azure·AWS·GCP·온프렘의 Windows/Linux VM (하이브리드·멀티클라우드 통합 뷰).
-
-| 기능 | Plan 1 | Plan 2 |
-| --- | :---: | :---: |
-| MDE 자동 온보딩 · **EDR** | ✅ | ✅ |
-| 통합 경고·인시던트(Defender XDR) | ✅ | ✅ |
-| 소프트웨어 인벤토리(MDVM) · 규정 준수 평가 | ✅ | ✅ |
-| 에이전트 기반 취약성 스캔 | ✅ | ✅ |
-| **에이전트리스 취약성/시크릿/악성코드 스캔** | ❌ | ✅ |
-| **Defender for DNS 경고** | ❌ | ✅ |
-| Azure 네트워크 계층 위협 탐지 · 네트워크 맵 | ❌ | ✅ |
-| **OS 기준선(MCSB) 평가** · 시스템 업데이트 | ❌ | ✅ |
-| MDVM 프리미엄 기능 | ❌ | ✅ |
-| **파일 무결성 모니터링(FIM)** | ❌ | ✅ |
-| **JIT VM 액세스** | ❌ | ✅ |
-| 일 500MB 무료 데이터 수집 | ❌ | ✅ |
+**보호 대상**: Azure·AWS·GCP·온프렘의 Windows/Linux VM (하이브리드·멀티클라우드 통합 뷰). 에이전트 기반(MDE)과 에이전트리스를 결합해 **가시성·컴플라이언스 / 공격 표면 축소 / 고급 탐지·대응** 세 축으로 보호합니다.
 
 - **Plan 1** = MDE(EDR) 통합 중심 엔트리 레벨. 리소스 수준 켜기/끄기 가능.
-- **Plan 2** = P1 전체 + 에이전트리스 스캔·FIM·JIT·MCSB 기준 등. 구독 수준 활성화(리소스 수준 켜기는 불가, 끄기만 가능).
+- **Plan 2** = P1 전체 + 에이전트리스 스캔·FIM·JIT·MCSB 기준·DNS/네트워크 탐지 등. 구독 수준 활성화.
 
-### 대표 심화 기능
-- **에이전트리스 악성코드 스캔(P2)** — Microsoft Defender Antivirus 기반, 에이전트/네트워크/성능 영향 없이 전체 파일 스캔.
-- **JIT VM 액세스(P2)** — RDP(3389)/SSH(22) 등 관리 포트를 평소 차단, 요청 시 Azure RBAC 검증 후 요청자 IP·포트·시간만 임시 개방(만료 시 자동 원복). Azure NSG/Firewall, AWS는 EC2 보안 그룹.
-- **FIM(P2)** — OS 파일·레지스트리·앱 파일 변경 탐지. **MDE 에이전트**(근실시간) + 에이전트리스(24시간). PCI-DSS·ISO 17799 요건 충족. MDE Windows 클라이언트 10.8799+ 필요, 최대 500개 규칙.
-- **Defender for DNS(P2)** — DNS 터널링 데이터 유출, C&C 통신, 악성 도메인 통신 탐지. 2023-08-01부터 신규 구독은 Servers P2에 포함.
-- **Defender Experts for Servers**(별도 구매) — Microsoft 분석가의 관리형 XDR·프로액티브 헌팅.
+주요 기능: 소프트웨어 인벤토리·취약성 평가(MDVM), 파일 무결성 모니터링(FIM), OS 패치(Azure Update Manager), 하드닝 기준선(MCSB), 시크릿 스캔, JIT VM 액세스, 제어 평면/DNS/네트워크 탐지, 에이전트리스 악성코드 스캔, NGAV·EDR.
 
-참고: [Defender for Servers 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-servers-overview) · [JIT VM 액세스](https://learn.microsoft.com/en-us/azure/defender-for-cloud/just-in-time-access-overview) · [FIM](https://learn.microsoft.com/en-us/azure/defender-for-cloud/file-integrity-monitoring-overview)
+▶ **[Defender for Servers 상세 →](cwp-servers.md)**
+
+참고: [Defender for Servers 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-servers-overview)
 
 ## 2. Defender for Storage
 
@@ -58,6 +40,8 @@ CWP는 **"지금 누가 내 리소스를 공격하고 있는가?"** 에 답하�
 
 구독 수준 활성화 권장(기존·미래 계정 자동 보호). **클래식 플랜** 사용 중이면 신규 기능 위해 **신규 플랜 마이그레이션** 필요.
 
+▶ **[Defender for Storage 상세 →](cwp-storage.md)**
+
 참고: [Defender for Storage](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-introduction)
 
 ## 3. Defender for Databases
@@ -65,16 +49,21 @@ CWP는 **"지금 누가 내 리소스를 공격하고 있는가?"** 에 답하�
 세 하위 플랜으로 구성됩니다.
 
 ### 3-1. Defender for Azure SQL Databases
-**대상**: Azure SQL DB·탄력적 풀·관리형 인스턴스·Synapse 전용 SQL 풀, SQL Server 2012~2022(Azure VM·Arc 포함).
-**기능**: 취약성 평가 + 위협 방어 — **SQL 인젝션**, **브루트포스**(성공/실패 분리 경고), 침해 머신에서의 의심 접근.
+
+- **대상**: Azure SQL DB·탄력적 풀·관리형 인스턴스·Synapse 전용 SQL 풀, SQL Server 2012~2022(Azure VM·Arc 포함).
+- **기능**: 취약성 평가 + 위협 방어 — **SQL 인젝션**, **브루트포스**(성공/실패 분리 경고), 침해 머신에서의 의심 접근.
 
 ### 3-2. Defender for Open-Source Relational Databases
-**대상**: Azure PostgreSQL/MySQL Flexible Server(모든 티어). AWS RDS(Aurora PostgreSQL·MySQL, PostgreSQL·MySQL·MariaDB)는 **Preview**.
-**탐지**: 이상 접근·쿼리 패턴(브루트포스), 침해 머신의 의심 활동. *PaaS만 지원, Arc 머신 미지원.*
+
+- **대상**: Azure PostgreSQL/MySQL Flexible Server(모든 티어). AWS RDS(Aurora PostgreSQL·MySQL, PostgreSQL·MySQL·MariaDB)는 **Preview**.
+- **탐지**: 이상 접근·쿼리 패턴(브루트포스), 침해 머신의 의심 활동. *PaaS만 지원, Arc 머신 미지원.*
 
 ### 3-3. Defender for Azure Cosmos DB
-**대상**: Cosmos DB **NoSQL API 전용**(Cassandra·MongoDB·Table·Gremlin 미지원).
-**탐지**: SQL 인젝션 변형, 이상 접근(Tor·악성 IP·비정상 위치), 의심스러운 키 목록 조회·데이터 추출. 계정 데이터에 직접 접근하지 않아 **성능 영향 없음**.
+
+- **대상**: Cosmos DB **NoSQL API 전용**(Cassandra·MongoDB·Table·Gremlin 미지원).
+- **탐지**: SQL 인젝션 변형, 이상 접근(Tor·악성 IP·비정상 위치), 의심스러운 키 목록 조회·데이터 추출. 계정 데이터에 직접 접근하지 않아 **성능 영향 없음**.
+
+▶ **[Defender for Databases 상세 →](cwp-databases.md)**
 
 참고: [Azure SQL](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-sql-introduction) · [오픈소스 DB](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-databases-introduction) · [Cosmos DB](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-defender-for-cosmos)
 
@@ -91,43 +80,49 @@ CWP는 **"지금 누가 내 리소스를 공격하고 있는가?"** 에 답하�
 
 **센서 기반 추가**: 안티맬웨어, DNS 탐지, **바이너리 드리프트 탐지·차단**(비인가 프로세스).
 
+▶ **[Defender for Containers 상세 →](cwp-containers.md)**
+
 참고: [Defender for Containers](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-introduction)
 
 ## 5. Defender for App Service
 
-**대상**: Azure App Service의 모든 웹앱·API(에이전트 불필요, Azure 네이티브).
-**탐지**: 클라우드 규모 가시성으로 요청/응답·내부 로그 분석 → **분산 공격**(여러 호스트의 소규모 IP가 유사 엔드포인트 크롤링) 탐지. MITRE 전술별 — 사전 공격(스캐너), 초기 접근(악성 IP의 FTP 연결), 실행(고권한 명령·파일리스·크립토마이닝).
-**Dangling DNS**: 사이트 해제 후 잔류 DNS 항목 탐지 → **서브도메인 탈취** 방지(Azure DNS·외부 등록기관 모두, Windows·Linux).
+- **대상**: Azure App Service의 모든 웹앱·API(에이전트 불필요, Azure 네이티브).
+- **탐지**: 클라우드 규모 가시성으로 요청/응답·내부 로그 분석 → **분산 공격**(여러 호스트의 소규모 IP가 유사 엔드포인트 크롤링) 탐지. MITRE 전술별 — 사전 공격(스캐너), 초기 접근(악성 IP의 FTP 연결), 실행(고권한 명령·파일리스·크립토마이닝).
+- **Dangling DNS**: 사이트 해제 후 잔류 DNS 항목 탐지 → **서브도메인 탈취** 방지(Azure DNS·외부 등록기관 모두, Windows·Linux).
 
 참고: [Defender for App Service](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-app-service-introduction)
 
 ## 6. Defender for Key Vault
 
-**대상**: Azure Key Vault(키·인증서·시크릿).
-**탐지**: 비정상·유해한 접근/악용 시도, **도난 자격 증명** 시나리오. 경고에 Object ID, UPN/IP 포함.
-**대응 4단계**: ① 소스 식별(테넌트 내부 여부) → ② 대응(미인가 IP는 방화벽, 미인가 앱/사용자는 접근 정책에서 제거) → ③ 영향 측정 → ④ **영향받은 시크릿·키·인증서 즉시 교체**.
+- **대상**: Azure Key Vault(키·인증서·시크릿).
+- **탐지**: 비정상·유해한 접근/악용 시도, **도난 자격 증명** 시나리오. 경고에 Object ID, UPN/IP 포함.
+- **대응 4단계**: ① 소스 식별(테넌트 내부 여부) → ② 대응(미인가 IP는 방화벽, 미인가 앱/사용자는 접근 정책에서 제거) → ③ 영향 측정 → ④ **영향받은 시크릿·키·인증서 즉시 교체**.
 
 참고: [Defender for Key Vault](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-key-vault-introduction)
 
 ## 7. Defender for Resource Manager
 
-**대상**: ARM 레이어의 **모든 리소스 관리 작업**(포털·REST API·CLI·PowerShell).
-**탐지**: 의심스러운 관리 작업(악성 IP, 안티맬웨어 비활성화, VM 확장의 의심 스크립트), **악용 툴킷**(MicroBurst·PowerZure), 관리 레이어 → 데이터 플레인 **측면 이동**.
+- **대상**: ARM 레이어의 **모든 리소스 관리 작업**(포털·REST API·CLI·PowerShell).
+- **탐지**: 의심스러운 관리 작업(악성 IP, 안티맬웨어 비활성화, VM 확장의 의심 스크립트), **악용 툴킷**(MicroBurst·PowerZure), 관리 레이어 → 데이터 플레인 **측면 이동**.
 
 참고: [Defender for Resource Manager](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-resource-manager-introduction)
 
 ## 8. Defender for APIs
 
-**대상**: Azure API Management에 게시된 API.
-**기능**: 인벤토리, 보안 결과(외부/미사용/미인증 API), 보안 태세, **데이터 분류**, 런타임 위협 탐지(**OWASP API Top 10** — 데이터 유출·볼류메트릭·비정상 파라미터·트래픽/IP 이상), Defender CSPM(그래프) 통합, SIEM 연계.
+- **대상**: Azure API Management에 게시된 API.
+- **기능**: 인벤토리, 보안 결과(외부/미사용/미인증 API), 보안 태세, **데이터 분류**, 런타임 위협 탐지(**OWASP API Top 10** — 데이터 유출·볼류메트릭·비정상 파라미터·트래픽/IP 이상), Defender CSPM(그래프) 통합, SIEM 연계.
+
+▶ **[Defender for APIs 상세 →](cwp-apis.md)**
 
 참고: [Defender for APIs](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-introduction)
 
 ## 9. Defender for AI Services
 
-**대상**: Azure OpenAI·Azure AI Model Inference 모델(현재 **텍스트 토큰만**).
-**탐지**: 데이터 유출·포이즈닝, **탈옥(Jailbreak)**, 자격 증명 도난, **프롬프트 인젝션**. Azure AI Content Safety **Prompt Shields** + Microsoft 위협 인텔리전스, Defender XDR 통합.
-**가용성**: 상용 클라우드만(Azure Government·21Vianet·AWS 연결 계정 미지원). 30일 체험(월 750억 토큰 캡). 활성화에 구독 Owner 필요.
+- **대상**: Azure OpenAI·Azure AI Model Inference 모델(현재 **텍스트 토큰만**).
+- **탐지**: 데이터 유출·포이즈닝, **탈옥(Jailbreak)**, 자격 증명 도난, **프롬프트 인젝션**. Azure AI Content Safety **Prompt Shields** + Microsoft 위협 인텔리전스, Defender XDR 통합.
+- **가용성**: 상용 클라우드만(Azure Government·21Vianet·AWS 연결 계정 미지원). 30일 체험(월 750억 토큰 캡). 활성화에 구독 Owner 필요.
+
+▶ **[Defender for AI 상세 →](cwp-ai.md)**
 
 참고: [AI 위협 보호](https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-threat-protection)
 
@@ -144,9 +139,11 @@ CWP는 **"지금 누가 내 리소스를 공격하고 있는가?"** 에 답하�
 
 **인시던트**는 관련 경고를 kill chain 패턴으로 묶은 것 — AI로 상관해 **알림 피로**를 줄이고 공격 스토리를 재구성(테넌트 간 분석 포함).
 
-**탐지 스택**: Microsoft 글로벌 위협 인텔리전스 + 행위 분석(ML) + 이상 탐지(배포별 기준선).
-**MITRE ATT&CK 매핑** — Containers는 ATT&CK for Containers 특화.
-**SIEM 내보내기**: CSV / 지속 내보내기(Event Hubs·Log Analytics) / **Microsoft Sentinel 커넥터**.
+**탐지 스택** · **매핑** · **내보내기**
+
+- **탐지 스택**: Microsoft 글로벌 위협 인텔리전스 + 행위 분석(ML) + 이상 탐지(배포별 기준선).
+- **MITRE ATT&CK 매핑** — Containers는 ATT&CK for Containers 특화.
+- **SIEM 내보내기**: CSV / 지속 내보내기(Event Hubs·Log Analytics) / **Microsoft Sentinel 커넥터**.
 
 참고: [보안 경고 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/alerts-overview)
 

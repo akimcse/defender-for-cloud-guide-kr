@@ -8,6 +8,12 @@
 - **Part 2 · 핵심 기능**
   - [03 · CSPM](03-cspm.md)<span class="t">15분</span>
   - [04 · CWP](04-cwp.md)<span class="t">15분</span>
+    - [Servers](cwp-servers.md)<span class="t">8분</span>
+    - [Storage](cwp-storage.md)<span class="t">6분</span>
+    - [Databases](cwp-databases.md)<span class="t">6분</span>
+    - [Containers](cwp-containers.md)<span class="t">6분</span>
+    - [APIs](cwp-apis.md)<span class="t">5분</span>
+    - [AI](cwp-ai.md)<span class="t">7분</span>
   - [05 · DevSecOps](05-devsecops.md)<span class="t">13분</span>
 
 - **Part 3 · 실습·활용**

@@ -65,8 +65,16 @@
     /* leaf items: link + time badge on one row */
     .sidebar-nav li:has(> a) {
       display: flex; align-items: center; justify-content: space-between; gap: 6px;
-      padding-right: 10px; border-radius: 8px;
+      padding-right: 10px; border-radius: 8px; flex-wrap: wrap;
     }
+    /* nested sub-list (e.g. CWP → Servers) wraps to its own row, indented */
+    .sidebar-nav li > ul {
+      flex-basis: 100%; width: 100%; margin: 2px 0 4px; padding-left: 12px;
+      border-left: 1px solid var(--line-soft); margin-left: 6px;
+    }
+    .sidebar-nav li > ul li:has(> a) { padding-right: 6px; }
+    .sidebar-nav li > ul li a { font-size: 12.5px; padding: 4px 10px; color: #7a8698; }
+    html[data-theme="dark"] .sidebar-nav li > ul { border-left-color: #2a323d; }
     .sidebar-nav li:has(> a):hover { background: #f1f6fc; }
     .sidebar-nav li.active:has(> a) { background: linear-gradient(90deg, #eaf3fc, #f3eefe); }
     .sidebar-nav a {
@@ -168,6 +176,49 @@
       color: #55617180; color: #556171; margin: 16px 0; padding: 6px 18px; border-radius: 0 8px 8px 0;
     }
     .markdown-section blockquote p { color: #556171; }
+
+    /* Screenshots / images */
+    .markdown-section img {
+      max-width: 100%; height: auto; display: block;
+      border: 1px solid var(--line); border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(20,40,80,.06); margin: 14px 0 4px;
+    }
+    html[data-theme="dark"] .markdown-section img {
+      border-color: #2a323d; box-shadow: 0 2px 12px rgba(0,0,0,.35);
+    }
+    /* image caption */
+    .markdown-section small.cap {
+      display: block; font-size: 12px; line-height: 1.5; color: #97a2b0;
+      margin: 3px 0 14px; padding-left: 2px;
+    }
+    html[data-theme="dark"] .markdown-section small.cap { color: #7d8896; }
+
+    /* ---------- feature cards ---------- */
+    .markdown-section .cardgrid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px; margin: 16px 0 8px;
+    }
+    .markdown-section .card {
+      border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px 15px;
+      background: #fff; box-shadow: 0 1px 3px rgba(20,40,80,.045);
+      transition: box-shadow .15s ease, transform .15s ease;
+    }
+    .markdown-section .card:hover { box-shadow: 0 6px 20px rgba(20,40,80,.10); transform: translateY(-2px); }
+    .markdown-section .card .ic {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px; border-radius: 10px;
+      background: #eef6fc; font-size: 20px; line-height: 1;
+    }
+    .markdown-section .card h4 {
+      margin: 10px 0 6px; font-size: 15px; font-weight: 800;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    .markdown-section .card h4 .sub { font-weight: 600; font-size: 12px; color: var(--ink-soft); margin-left: 4px; }
+    .markdown-section .card p { margin: 0; font-size: 13.5px; line-height: 1.62; color: var(--ink-soft); }
+    .markdown-section .card p b, .markdown-section .card p strong { color: var(--ink); font-weight: 700; }
+    html[data-theme="dark"] .markdown-section .card { background: #1b212b; border-color: #2a323d; box-shadow: none; }
+    html[data-theme="dark"] .markdown-section .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.42); }
+    html[data-theme="dark"] .markdown-section .card .ic { background: #12202e; }
 
     /* ---------- GitHub-style callouts ---------- */
     .alert { border: 1px solid; border-left-width: 4px; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
