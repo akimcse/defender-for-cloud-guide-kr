@@ -20,6 +20,8 @@ Defender for Cloud를 사용하려면 **① 구독에서 MDC 열기(기본 CSPM 
 
 ### 무료: MDC 기본 기능 (자동)
 
+<img width="1835" height="855" alt="image" src="https://github.com/user-attachments/assets/7d78a239-f636-42a2-92e3-2fd5ec3cd79f" />
+
 Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세 관리)** 과 **Microsoft Defender XDR 접근**이 자동으로 제공됩니다. 아래 기능이 여기에 포함되며, 공격 경로 분석·DSPM·워크로드 위협 탐지 같은 심화 기능은 유료 플랜(**Defender CSPM** 또는 워크로드 Defender 플랜)에서 제공됩니다.
 
 - 보안 점수(Secure Score)
@@ -41,6 +43,8 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세
 
 ### 활성화 방법 (Azure 포털)
 
+<img width="1572" height="776" alt="image" src="https://github.com/user-attachments/assets/a22530c7-39b0-49bb-8423-724df09eb09f" />
+
 1. **Azure 포털**(portal.azure.com) 로그인 → **Microsoft Defender for Cloud** 검색·선택
 2. 메뉴에서 **환경 설정(Environment settings)**
 3. 보호할 **구독 또는 워크스페이스** 선택
@@ -54,7 +58,7 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세
 
 ## 2. 전체 Defender 플랜 목록
 
-아래는 별도 표기가 없으면 **GA**입니다. 각 플랜의 상세 기능은 Part 2(CSPM·CWP·DevSecOps)에서 다룹니다.
+각 플랜의 상세 기능은 Part 2(CSPM·CWP·DevSecOps)에서 다룹니다.
 
 | 플랜 | 보호 대상 · 핵심 | 상태 |
 | --- | --- | --- |
@@ -126,6 +130,11 @@ Defender for Cloud는 **Azure RBAC**를 사용합니다. 전용 역할 2종과 �
 
 **사전 요건:** MDC가 활성화된 Azure 구독, AWS 계정 접근, 구독의 **Contributor** 권한. (CIEM 사용 시 Security Admin + `Application.ReadWrite.All`)
 
+<img width="1806" height="781" alt="image" src="https://github.com/user-attachments/assets/2d1b58cb-ab88-4363-95be-c067ab234a36" />
+<img width="826" height="511" alt="image" src="https://github.com/user-attachments/assets/d56ee7c6-8f55-4ad7-ba40-09e7b8d1aaf6" />
+<img width="3270" height="1755" alt="image" src="https://github.com/user-attachments/assets/b8196b2a-b27c-4a3c-b27f-11c4695dc8db" />
+<img width="1295" height="836" alt="image" src="https://github.com/user-attachments/assets/baca088d-d424-44af-bc39-5677ac6932b1" />
+
 1. Azure 포털 → MDC → **환경 설정** → **환경 추가** → **Amazon Web Services**
 2. 커넥터 유형 선택: **Management account**(하위 계정 자동 프로비저닝) 또는 **Single account**
 3. AWS 리전·Azure 구독·리소스 그룹·위치, **스캔 주기(4/6/12/24시간)** 설정
@@ -140,6 +149,10 @@ Defender for Cloud는 **Azure RBAC**를 사용합니다. 전용 역할 2종과 �
 ### GCP 커넥터 (GA)
 
 **사전 요건:** MDC 활성 Azure 구독, GCP 프로젝트/조직 접근, 구독의 **Contributor** 권한.
+
+<img width="2525" height="1120" alt="image" src="https://github.com/user-attachments/assets/3d16bd2f-7e21-419e-b080-7c84fabffdfa" />
+<img width="1860" height="915" alt="image" src="https://github.com/user-attachments/assets/87a97e1f-8bff-4b7b-9ac2-4945760d8486" />
+<img width="2582" height="1862" alt="image" src="https://github.com/user-attachments/assets/e46d8491-2438-493b-9ab5-57dc09f08a6a" />
 
 1. Azure 포털 → MDC → **환경 설정** → **환경 추가** → **Google Cloud Platform**
 2. Azure 구독·리소스 그룹·위치·스캔 주기 설정
