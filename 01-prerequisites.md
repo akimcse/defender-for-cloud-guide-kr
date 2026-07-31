@@ -12,7 +12,7 @@
 >
 > ⏱️ 예상 소요 **11분**　·　🎯 대상: 보안/IT 관리자, 도입 담당자, 클라우드 엔지니어
 
-Defender for Cloud를 사용하려면 **① 구독에서 MDC 열기(기본 CSPM 자동 활성화) → ② 필요한 유료 플랜 켜기 → ③ 멀티클라우드/온프렘 커넥터 구성 → ④ 역할 부여**가 필요합니다. 이 페이지는 온보딩 사전 준비를 정리합니다.
+Defender for Cloud 온보딩은 **① 구독에서 MDC 열기(기본 CSPM 자동 활성화) → ② 필요한 유료 플랜 켜기 → ③ 멀티클라우드/온프렘 커넥터 구성** 순으로 진행합니다. 각 단계에는 적절한 **Azure RBAC 역할**이 전제되므로(§5), 시작 전 역할 배분을 함께 계획하세요. 이 페이지는 온보딩 사전 준비를 정리합니다.
 
 ---
 
@@ -20,7 +20,9 @@ Defender for Cloud를 사용하려면 **① 구독에서 MDC 열기(기본 CSPM 
 
 ### 무료: MDC 기본 기능 (자동)
 
-Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세 관리)** 과 **Microsoft Defender XDR 접근**이 자동으로 제공됩니다. 아래 기능이 여기에 포함되며, 공격 경로 분석·DSPM·워크로드 위협 탐지 같은 심화 기능은 유료 플랜(**Defender CSPM** 또는 워크로드 Defender 플랜)에서 제공됩니다.
+<img width="1835" height="855" alt="image" src="https://github.com/user-attachments/assets/7d78a239-f636-42a2-92e3-2fd5ec3cd79f" />
+
+Microsoft Defender for Cloud를 켜면 별도 구독 없이**기본 CSPM(태세 관리)** 과 **Microsoft Defender XDR 접근**이 자동으로 제공됩니다. 아래 기능이 여기에 포함되며, 공격 경로 분석·DSPM·워크로드 위협 탐지 같은 심화 기능은 유료 플랜(**Defender CSPM** 또는 워크로드 Defender 플랜)에서 제공됩니다.
 
 - 보안 점수(Secure Score)
 - 자산 인벤토리(Asset inventory)
@@ -41,6 +43,8 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세
 
 ### 활성화 방법 (Azure 포털)
 
+<img width="1572" height="776" alt="image" src="https://github.com/user-attachments/assets/a22530c7-39b0-49bb-8423-724df09eb09f" />
+
 1. **Azure 포털**(portal.azure.com) 로그인 → **Microsoft Defender for Cloud** 검색·선택
 2. 메뉴에서 **환경 설정(Environment settings)**
 3. 보호할 **구독 또는 워크스페이스** 선택
@@ -54,7 +58,7 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세
 
 ## 2. 전체 Defender 플랜 목록
 
-아래는 별도 표기가 없으면 **GA**입니다. 각 플랜의 상세 기능은 Part 2(CSPM·CWP·DevSecOps)에서 다룹니다.
+각 플랜의 상세 기능은 Part 2(CSPM·CWP·DevSecOps)에서 다룹니다.
 
 | 플랜 | 보호 대상 · 핵심 | 상태 |
 | --- | --- | --- |
@@ -73,7 +77,7 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세
 | **Defender for APIs** | Azure API Management 게시 API — 인벤토리·태세·OWASP API Top 10 탐지 | GA |
 | **Defender for AI Services** | 생성형 AI(Azure OpenAI 등) — 탈옥·프롬프트 인젝션·데이터 유출 실시간 탐지 (**상용 클라우드 전용**) | GA |
 
-참고: [Defender for Cloud 소개](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction) · [Defender for Servers](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-servers-overview) · [Defender for Storage](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-introduction)
+참고: [Defender for Cloud 소개](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction)
 
 > [!NOTE]
 > **Defender for Servers Plan 1 vs Plan 2 배포 범위**
@@ -81,7 +85,74 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세
 > - **P2**: 구독 수준으로 활성화, 리소스별로 끌 수는 있으나 리소스 수준으로만 켤 수는 없음. **에이전트리스 스캔·악성코드 스캔·FIM·JIT** 등 고급 기능 포함
 > 참고: [Defender for Servers 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-servers-overview)
 
-## 3. 역할 및 권한 (Azure RBAC)
+## 3. 멀티클라우드 온보딩
+
+### AWS 커넥터 (GA — 정부 클라우드 제외)
+
+**사전 요건:** MDC가 활성화된 Azure 구독, AWS 계정 접근, 구독의 **Contributor** 권한. (CIEM 사용 시 Security Admin + `Application.ReadWrite.All`)
+
+<img width="1806" height="781" alt="image" src="https://github.com/user-attachments/assets/2d1b58cb-ab88-4363-95be-c067ab234a36" />
+<img width="826" height="511" alt="image" src="https://github.com/user-attachments/assets/d56ee7c6-8f55-4ad7-ba40-09e7b8d1aaf6" />
+<img width="3270" height="1755" alt="image" src="https://github.com/user-attachments/assets/b8196b2a-b27c-4a3c-b27f-11c4695dc8db" />
+<img width="1295" height="836" alt="image" src="https://github.com/user-attachments/assets/baca088d-d424-44af-bc39-5677ac6932b1" />
+
+1. Azure 포털 → MDC → **환경 설정** → **환경 추가** → **Amazon Web Services**
+2. 커넥터 유형 선택: **Management account**(하위 계정 자동 프로비저닝) 또는 **Single account**
+3. AWS 리전·Azure 구독·리소스 그룹·위치, **스캔 주기(4/6/12/24시간)** 설정
+4. AWS 계정 ID 입력 → **플랜 선택**
+5. **액세스 구성** → **기본 액세스** 또는 **최소 권한 액세스**
+6. 배포 방식: **AWS CloudFormation** 또는 **Terraform** — 생성된 템플릿을 AWS에서 실행(IAM 역할 생성)
+
+**인증:** 연합 신뢰 + 단기 자격 증명(장기 시크릿 미저장).
+
+참고: [AWS 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-aws)
+
+### GCP 커넥터 (GA)
+
+**사전 요건:** MDC 활성 Azure 구독, GCP 프로젝트/조직 접근, 구독의 **Contributor** 권한.
+
+<img width="2525" height="1120" alt="image" src="https://github.com/user-attachments/assets/3d16bd2f-7e21-419e-b080-7c84fabffdfa" />
+<img width="1860" height="915" alt="image" src="https://github.com/user-attachments/assets/87a97e1f-8bff-4b7b-9ac2-4945760d8486" />
+<img width="2582" height="1862" alt="image" src="https://github.com/user-attachments/assets/e46d8491-2438-493b-9ab5-57ddc09f08a6" />
+
+1. Azure 포털 → MDC → **환경 설정** → **환경 추가** → **Google Cloud Platform**
+2. Azure 구독·리소스 그룹·위치·스캔 주기 설정
+3. 조직 수준(조직 ID) 또는 프로젝트 수준(프로젝트 번호+ID) 선택
+4. **플랜 선택** → **액세스 구성**(기본/최소 권한)
+5. GCP Cloud Shell에서 생성된 **`gcloud` 스크립트** 실행 — 워크로드 자격 증명 풀·서비스 계정·정책 바인딩 생성
+
+**인증:** 워크로드 자격 증명 연합 + 서비스 계정 위임(장기 자격 증명 미사용).
+
+참고: [GCP 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-gcp)
+
+### 온프렘 / 기타 클라우드 — Azure Arc (권장)
+
+- Azure Arc로 연결하면 온프렘 머신이 **Azure VM처럼 MDC에 표시**됩니다.
+- AWS·GCP 커넥터는 EC2/GCE의 **Arc 배포를 자동 처리**합니다.
+- Arc 없이 직접 온보딩(direct onboarding) 시 **Defender for Servers Plan 2의 전체 기능에 접근할 수 없습니다.**
+
+참고: [온프렘/Arc 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-machines)
+
+## 4. 데이터 수집 · Log Analytics 워크스페이스
+
+Defender for Cloud는 세 가지 방식으로 데이터를 수집합니다.
+
+- **에이전트리스 스캔** (Defender CSPM / Defender for Servers P2) — 디스크 스냅샷 기반, 에이전트·네트워크 불필요. 취약성·악성코드·시크릿·소프트웨어 인벤토리.
+- **Microsoft Defender for Endpoint(MDE) 에이전트** — Defender for Servers의 실시간 위협 탐지·FIM·취약성 평가의 기본 수단.
+- **Azure Monitor Agent(AMA)** — Defender for SQL servers on machines, 그리고 Servers P2의 **일 500MB 무료 수집** 혜택에 사용.
+
+> [!WARNING]
+> **레거시 Log Analytics 에이전트(MMA)는 2024년에 은퇴**했습니다. 기존 MMA 기반 기능은 MDE 통합 또는 에이전트리스 스캔으로 전환되었습니다. FIM·JIT 등은 이제 **MDE 기반**입니다.
+
+**Log Analytics 워크스페이스가 필요한 경우**
+
+- **파일 무결성 모니터링(FIM)** (Servers P2)
+- **Defender for SQL servers on machines** (AMA를 워크스페이스에 배포)
+- **일 500MB 무료 수집** 혜택 (AMA + 워크스페이스 연결)
+
+참고: [모니터링 구성 요소](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components) · [Servers 데이터 워크스페이스 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/plan-defender-for-servers-data-workspace)
+
+## 5. 역할 및 권한 (Azure RBAC)
 
 Defender for Cloud는 **Azure RBAC**를 사용합니다. 전용 역할 2종과 표준 Azure 역할(Contributor/Owner)이 함께 쓰입니다.
 
@@ -119,64 +190,6 @@ Defender for Cloud는 **Azure RBAC**를 사용합니다. 전용 역할 2종과 �
 | CIEM(AWS·GCP 권한 관리) | Security Admin + 테넌트 `Application.ReadWrite.All` |
 
 참고: [모니터링 구성 요소](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components)
-
-## 4. 멀티클라우드 온보딩
-
-### AWS 커넥터 (GA — 정부 클라우드 제외)
-
-**사전 요건:** MDC가 활성화된 Azure 구독, AWS 계정 접근, 구독의 **Contributor** 권한. (CIEM 사용 시 Security Admin + `Application.ReadWrite.All`)
-
-1. Azure 포털 → MDC → **환경 설정** → **환경 추가** → **Amazon Web Services**
-2. 커넥터 유형 선택: **Management account**(하위 계정 자동 프로비저닝) 또는 **Single account**
-3. AWS 리전·Azure 구독·리소스 그룹·위치, **스캔 주기(4/6/12/24시간)** 설정
-4. AWS 계정 ID 입력 → **플랜 선택**
-5. **액세스 구성** → **기본 액세스** 또는 **최소 권한 액세스**
-6. 배포 방식: **AWS CloudFormation** 또는 **Terraform** — 생성된 템플릿을 AWS에서 실행(IAM 역할 생성)
-
-**인증:** 연합 신뢰 + 단기 자격 증명(장기 시크릿 미저장).
-
-참고: [AWS 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-aws)
-
-### GCP 커넥터 (GA)
-
-**사전 요건:** MDC 활성 Azure 구독, GCP 프로젝트/조직 접근, 구독의 **Contributor** 권한.
-
-1. Azure 포털 → MDC → **환경 설정** → **환경 추가** → **Google Cloud Platform**
-2. Azure 구독·리소스 그룹·위치·스캔 주기 설정
-3. 조직 수준(조직 ID) 또는 프로젝트 수준(프로젝트 번호+ID) 선택
-4. **플랜 선택** → **액세스 구성**(기본/최소 권한)
-5. GCP Cloud Shell에서 생성된 **`gcloud` 스크립트** 실행 — 워크로드 자격 증명 풀·서비스 계정·정책 바인딩 생성
-
-**인증:** 워크로드 자격 증명 연합 + 서비스 계정 위임(장기 자격 증명 미사용).
-
-참고: [GCP 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-gcp)
-
-### 온프렘 / 기타 클라우드 — Azure Arc (권장)
-
-- Azure Arc로 연결하면 온프렘 머신이 **Azure VM처럼 MDC에 표시**됩니다.
-- AWS·GCP 커넥터는 EC2/GCE의 **Arc 배포를 자동 처리**합니다.
-- Arc 없이 직접 온보딩(direct onboarding) 시 **Defender for Servers Plan 2의 전체 기능에 접근할 수 없습니다.**
-
-참고: [온프렘/Arc 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-machines)
-
-## 5. 데이터 수집 · Log Analytics 워크스페이스
-
-Defender for Cloud는 세 가지 방식으로 데이터를 수집합니다.
-
-- **에이전트리스 스캔** (Defender CSPM / Defender for Servers P2) — 디스크 스냅샷 기반, 에이전트·네트워크 불필요. 취약성·악성코드·시크릿·소프트웨어 인벤토리.
-- **Microsoft Defender for Endpoint(MDE) 에이전트** — Defender for Servers의 실시간 위협 탐지·FIM·취약성 평가의 기본 수단.
-- **Azure Monitor Agent(AMA)** — Defender for SQL servers on machines, 그리고 Servers P2의 **일 500MB 무료 수집** 혜택에 사용.
-
-> [!WARNING]
-> **레거시 Log Analytics 에이전트(MMA)는 2024년에 은퇴**했습니다. 기존 MMA 기반 기능은 MDE 통합 또는 에이전트리스 스캔으로 전환되었습니다. FIM·JIT 등은 이제 **MDE 기반**입니다.
-
-**Log Analytics 워크스페이스가 필요한 경우**
-
-- **파일 무결성 모니터링(FIM)** (Servers P2)
-- **Defender for SQL servers on machines** (AMA를 워크스페이스에 배포)
-- **일 500MB 무료 수집** 혜택 (AMA + 워크스페이스 연결)
-
-참고: [모니터링 구성 요소](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components) · [Servers 데이터 워크스페이스 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/plan-defender-for-servers-data-workspace)
 
 ## 6. Microsoft Defender XDR 통합 요구사항
 

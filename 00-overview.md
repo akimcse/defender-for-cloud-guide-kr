@@ -68,7 +68,7 @@ Defender for Cloud는 Azure 구독, AWS 계정, GCP 프로젝트를 보안 표�
 | Defender for Key Vault | Key Vault 접근 이상 징후 |
 | Defender for Resource Manager | 비정상 리소스 관리 작업 |
 | Defender for APIs | API 가시성·태세·실시간 위협 탐지 |
-| AI 위협 보호 | 생성형 AI 워크로드 위협 탐지 |
+| Defender for AI Services | 생성형 AI 워크로드 위협 탐지 |
 
 참고: [Defender for Cloud 소개](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction)
 

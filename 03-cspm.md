@@ -211,6 +211,12 @@ VM 디스크 스냅샷을 대역 외로 분석 후 **수 분 내 삭제**합니�
 - **취약성**: TensorFlow·PyTorch·LangChain 등 라이브러리 의존성, IaC 구성 오류, 컨테이너 이미지
 - **인터넷 노출 AI 엔드포인트** 하이라이트 + 인증·관리 ID 권장사항, **AI 공격 경로** 분석
 
+![AI 자산 인벤토리 화면](assets/ai/inventory.png)
+<small class="cap">플랫폼별(Foundry·Copilot Studio 등) 발견된 AI 모델·에이전트와 메타데이터</small>
+
+![AI 공격 경로 화면](assets/ai/attack-path.png)
+<small class="cap">클라우드 리소스·에이전트·모델·데이터 관계 기반 AI 공격 경로 분석</small>
+
 > [!NOTE]
 > AI **에이전트** 수준 탐색·태세는 2026년 7월 1일부터 **Microsoft Agent 365** 라이선스가 필요합니다(Defender CSPM은 Foundry 계정/프로젝트 탐색은 지속 지원).
 

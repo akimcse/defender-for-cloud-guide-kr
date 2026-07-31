@@ -13,7 +13,7 @@
     - [Databases](cwp-databases.md)<span class="t">6분</span>
     - [Containers](cwp-containers.md)<span class="t">6분</span>
     - [APIs](cwp-apis.md)<span class="t">5분</span>
-    - [AI](cwp-ai.md)<span class="t">7분</span>
+    - [AI Services](cwp-ai.md)<span class="t">6분</span>
   - [05 · DevSecOps](05-devsecops.md)<span class="t">13분</span>
 
 - **Part 3 · 실습·활용**
