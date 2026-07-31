@@ -69,13 +69,33 @@ Microsoft Defender Antivirus(MDAV) 기반으로 **업로드 시 + 온디맨드**
 ## 활성화 · 온보딩
 
 > [!NOTE]
-> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 아래는 **Storage 플랜 고유** 설정입니다.
+> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. Storage는 토글 하나로 핵심 기능이 켜지지만, **비용·자동화·마이그레이션**에서 검토할 설정이 있습니다.
 
-- **원클릭 활성화** — 구독 또는 스토리지 계정 수준으로 켜면 기존·미래 계정이 자동 보호됩니다. **스토리지 계정 생성 과정에 통합**되어 체크박스 하나로 신규 계정을 곧바로 보호할 수 있고, Terraform·Bicep·ARM·PowerShell·REST API·Azure Policy로 대규모 자동화가 가능합니다. 켜면 **활동 모니터링·악성코드 스캔·민감 데이터 위협 탐지가 기본 ON**입니다.
-- **악성코드 스캔 비용 통제** — **GB당 과금**이라 월 스캔 상한(기본 **10,000GB/계정**)을 확인하세요. 활성화 시 **Event Grid 시스템 토픽·StorageDataScanner** 등이 자동 배포되며, 삭제·수정하면 스캔이 멈출 수 있습니다.
-- **스캔 결과 연동(선택)** — 자동화가 필요하면 **Event Grid 커스텀 토픽**(동일 리전·공개 액세스)이나 **Log Analytics 워크스페이스**를 별도 구성합니다. 악성 파일 **소프트 삭제**도 선택 활성화입니다.
-- **계정별 재정의** — 구독 설정과 다르게 하려면 계정 설정에서 **"구독 수준 설정 재정의"를 먼저 켜야** 합니다(안 켜면 구독 설정으로 덮어써짐).
-- **클래식 플랜 마이그레이션** — 2025-02-05 이후 클래식 플랜은 신규 활성화 불가. 사용 중이면 신규 플랜으로 마이그레이션(구형 정책 비활성화 선행)이 필요합니다.
+### 공통 1단계 — 플랜 활성화
+
+1. Azure 포털 → **Defender for Cloud** → **환경 설정** → 구독 선택 → **Edit settings**
+2. **Storage** 플랜 **On** → **Save**
+
+- 구독 또는 스토리지 계정 수준으로 켤 수 있고, **스토리지 계정 생성 과정에 통합**되어 체크박스 하나로 신규 계정을 곧바로 보호합니다. Terraform·Bicep·ARM·PowerShell·REST API·Azure Policy로 대규모 자동화도 가능합니다.
+- 켜면 **활동 모니터링·on-upload 악성코드 스캔·민감 데이터 위협 탐지가 기본 ON**입니다(진단 로그 설정 불필요). 신규 계정 보호 시작까지 최대 24시간.
+- 권한: 활동 모니터링은 Security Admin, **악성코드 스캔·민감 데이터까지 켜려면 구독 Owner**(또는 해당 Action Set)
+
+### 2단계 — 악성코드 스캔 비용·자동 배포 리소스 확인
+
+- **GB당 과금**입니다. 월 스캔 상한(기본 **10,000GB/계정/월**)을 `계정 → Defender for Cloud → Edit configuration`에서 조정하세요. 상한 **75%·100% 도달 시 경고**가 발생합니다.
+- 활성화 시 **Event Grid 시스템 토픽 · StorageDataScanner · DefenderForStorageSecurityOperator**가 자동 배포됩니다. **삭제·수정하면 스캔이 멈출 수 있으니** 건드리지 마세요.
+
+### 3단계 — 스캔 결과 연동 (선택)
+
+- **Blob index tags**(기본) — 스캔 결과가 blob 태그로 기록되어 앱이 클린 파일만 읽도록 구성 가능
+- **Event Grid 커스텀 토픽** — 자동 대응이 필요하면 별도 생성(**동일 리전·공개 네트워크 액세스 필요**, private endpoint 미지원)
+- **Log Analytics 워크스페이스** — 감사·컴플라이언스용으로 연결
+- **악성 파일 소프트 삭제** — 기본 꺼짐, Edit configuration에서 활성화(격리·이동은 Logic Apps/Function Apps 커스텀 워크플로)
+
+### 4단계 — 계정별 재정의 · 클래식 마이그레이션
+
+- **계정별 재정의** — 구독 설정과 다르게 하려면 `계정 → Microsoft Defender for Cloud → Settings`에서 **"Override subscription-level settings"를 먼저 켜야** 합니다(안 켜고 저장하면 구독 설정으로 덮어써짐).
+- **클래식 마이그레이션** — **2025-02-05 이후 클래식(per-transaction) 플랜은 신규 활성화 불가**입니다. 사용 중이면 신규 플랜으로 마이그레이션하되, **구형 정책 5종을 먼저 비활성화**해야 합니다(한 번 전환하면 클래식으로 되돌릴 수 없음).
 
 참고: [Storage 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-azure-portal-enablement) · [악성코드 스캔 고급 설정](https://learn.microsoft.com/en-us/azure/defender-for-cloud/advanced-configurations-for-malware-scanning) · [클래식 마이그레이션](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-classic-migrate)
 

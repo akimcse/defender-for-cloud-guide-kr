@@ -51,14 +51,45 @@
 ## 활성화 · 온보딩
 
 > [!IMPORTANT]
-> **플랜 토글만으로는 단 하나의 API도 보호되지 않습니다.** 활성화는 **2단계**입니다.
+> **플랜 토글만으로는 단 하나의 API도 보호되지 않습니다.** 활성화는 **2단계**(플랜 활성화 → API 온보딩)입니다.
 
-1. **플랜 활성화(구독 수준)** — `환경 설정 → APIs`에서 켜고, **5단계 요금제 중 적정 플랜을 선택**합니다. 기본은 **Plan 1(월 100만 호출)** 이라 트래픽이 많으면 초과 요금이 발생할 수 있습니다(APIM Metrics로 사전 측정 권장).
-2. **API 온보딩(필수)** — `Recommendations → "Azure API Management APIs should be onboarded to Defender for APIs"` 권장사항에서 보호할 API를 선택하고 **Fix**합니다. 이 단계를 마쳐야 실제 보호·탐지가 시작됩니다(대시보드 반영 최대 ~50분).
+### 전제조건
 
-전제: API가 **Azure API Management**에 게시된 **REST API**여야 하며, self-hosted gateway·workspaces는 제외됩니다. 온보딩에는 **API Management Service Contributor** 권한이 필요합니다.
+- Defender for Cloud가 활성화된 **Azure 구독**
+- **Azure API Management** 인스턴스 1개 이상 + 지원 API **1개 이상 임포트**
+- 보호 대상은 **REST API**만 (GraphQL·SOAP·gRPC 미지원). **self-hosted gateway·API Management workspaces** 로 노출된 API는 제외
+- 권한: **API Management Service Contributor** + Defender 플랜 활성화 권한(Security Admin 또는 구독 Owner/Contributor)
 
-참고: [APIs 배포·온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-deploy) · [전제조건·지원 범위](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-prepare)
+### 공통 1단계 — 플랜 활성화 (구독 수준)
+
+1. Azure 포털 → **Microsoft Defender for Cloud** → **환경 설정(Environment settings)**
+2. 보호할 API가 있는 **구독** 선택
+3. **APIs** 플랜 행의 **Details** 클릭 → **Plan 1~5 중 선택**
+4. **저장(Save)**
+
+> [!WARNING]
+> 기본값은 **Plan 1(월 100만 API 호출)** 입니다. 청구는 **구독 전체의 월간 API 트래픽 합산** 기준이며, 엔타이틀먼트 초과분에 **overage 요금**이 부과됩니다. 플랜 선택 전 **APIM → Metrics**(Requests·Sum·최근 30일)로 트래픽을 측정해 적정 플랜을 고르세요.
+
+### 2단계 — API 온보딩 (필수, 실제 보호 시작점)
+
+1. Defender for Cloud → **Recommendations(권장사항)** 이동
+2. 검색창에 `Defender for APIs` 입력
+3. 권장사항 **"Azure API Management APIs should be onboarded to Defender for APIs"** 선택
+4. **Unhealthy resources**(미온보딩)에서 보호할 API 선택
+5. **Fix** → **Fix resources** 클릭
+6. 성공 알림 확인
+
+> [!TIP]
+> 온보딩 후 반영에는 시간이 걸립니다 — 권장사항 갱신 최대 **50분**, API security 대시보드 인사이트 약 **40분**, 첫 보안 인사이트 약 **30분**.
+
+> [!NOTE]
+> APIM 인스턴스가 고부하 상태일 때 **모든 API를 한 번에 온보딩하면 인스턴스 장애(outage)** 가 발생할 수 있습니다. capacity 지표를 보며 **단계적으로** 온보딩하세요.
+
+### 대체 경로 — API Management 포털에서 온보딩
+
+APIM 인스턴스 → **Security → Defender for Cloud** → "Enable Defender on the subscription (recommended)" → APIs 플랜 On → 이후 동일하게 미보호 API 온보딩.
+
+참고: [APIs 배포·온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-deploy) · [전제조건·지원 범위](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-prepare) · [APIM에서 온보딩](https://learn.microsoft.com/en-us/azure/api-management/protect-with-defender-for-apis)
 
 ---
 

@@ -75,10 +75,38 @@ Azure AI Content Safety **Prompt Shields**가 앱에서 탈옥·프롬프트 공
 > [!NOTE]
 > 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 플랜을 켠 뒤 **하위 컴포넌트를 추가로 켜야** 실제 운영에 쓸 수 있습니다.
 
-- **플랜 활성화** — `환경 설정 → AI services`를 켭니다(활동 모니터링·경고는 이때 자동). 활성화에 구독 **Owner/Contributor** 필요.
-- **하위 컴포넌트(별도 토글)** — `Settings`에서 **Suspicious Prompt Evidence**(끄면 경고의 프롬프트 내용이 마스킹됨), **Data Security for AI**(Microsoft Purview **별도 라이선스** 필요), **AI Model Security**를 각각 켭니다.
-- **사용자 컨텍스트(선택·코드 변경)** — 경고를 사용자·IP 단위로 상관하려면 개발자가 Azure OpenAI API 호출에 **`UserSecurityContext`** 파라미터를 추가해야 합니다(**Azure OpenAI REST 전용**, Model Inference API 미지원).
-- **가용성** — 상용 클라우드 전용, **30일 / 750억 토큰** 무료 체험(초과 시 과금).
+### 공통 1단계 — 플랜 활성화
+
+1. Azure 포털 → **Defender for Cloud** → **환경 설정** → 구독 선택
+2. **AI services** 플랜 **On** → **Save** (권한: 구독 **Owner 또는 Contributor**)
+
+이때 **활동 모니터링(보안 경고 생성)** 은 자동 활성화됩니다. 다만 아래 하위 컴포넌트는 **기본 꺼짐**입니다.
+
+### 2단계 — 하위 컴포넌트 활성화 (`AI services → Settings`)
+
+| 컴포넌트 | 기본 | 켜야 하는 이유 |
+| --- | :---: | --- |
+| **Suspicious Prompt Evidence** | ❌ | 켜지 않으면 Defender는 계속 분석하되 **경고 안의 프롬프트·응답 내용이 마스킹**됩니다. SOC가 실제 증거를 보려면 필수 |
+| **Data Security for AI Interactions** | ❌ | Microsoft Purview가 프롬프트·응답을 분석. **Purview 별도 라이선스 필요**(이 플랜에 미포함) |
+| **AI Model Security** | ❌ | Azure ML 레지스트리 모델의 멀웨어·직렬화 취약점·시크릿 노출 스캔 |
+
+### 3단계 — 최종 사용자 컨텍스트 (선택 · 코드 변경)
+
+경고를 **사용자·IP 단위로 상관·차단**하려면 개발자가 Azure OpenAI API 요청 본문에 `UserSecurityContext`를 추가합니다.
+
+```json
+"UserSecurityContext": {
+  "EndUserId": "<Entra ID 사용자 객체 ID>",
+  "SourceIP": "<최종 사용자 IP>",
+  "applicationName": "<애플리케이션명>"
+}
+```
+
+- 모든 필드는 **선택**이며, 지원: **Azure OpenAI REST API(2025-01-01+)**, .NET·Python·JS·Go SDK
+- ⚠️ **Azure AI Model Inference API로 배포된 모델에는 미지원**
+
+> [!IMPORTANT]
+> **가용성 제약** — 상용 클라우드 전용(Azure Government·21Vianet·연결된 AWS 계정 미지원), 현재 **텍스트 토큰**만 스캔. **30일 / 750억 토큰** 무료 체험이며 30일 이내라도 캡 도달 시 과금이 시작됩니다.
 
 참고: [AI 위협 보호 사용 설정](https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-onboarding) · [사용자 컨텍스트](https://learn.microsoft.com/en-us/azure/defender-for-cloud/gain-end-user-context-ai)
 

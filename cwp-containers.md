@@ -64,14 +64,52 @@
 ## 활성화 · 온보딩
 
 > [!NOTE]
-> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 플랜 토글은 **시작점**일 뿐, 런타임 보호는 **센서 배포**가 있어야 작동합니다. 환경별 작업량이 크게 다릅니다.
+> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 플랜 토글은 **시작점**일 뿐, 런타임 보호는 **센서 배포**가 있어야 작동합니다. 환경(AKS/EKS/GKE/Arc)별 작업량이 크게 다릅니다.
 
-- **AKS (Azure)** — 별도 커넥터 불필요. `환경 설정 → Containers → Settings`에서 **Defender 센서·Azure Policy 애드온**을 켜면 자동 배포됩니다(감사 로그 수집은 완전 자동, 프라이빗 클러스터도 추가 설정 없음).
-- **EKS·GKE (멀티클라우드)** — 훨씬 많은 단계: **AWS/GCP 커넥터 생성 → CloudFormation(AWS)·gcloud 스크립트(GCP) 배포 → Azure Arc 자동 등록 → Arc 확장으로 센서 배포**. 프라이빗 클러스터는 MDC IP 대역(`172.212.245.192/28` 등) 허용이 필요합니다.
-- **Arc(온프렘)** — 클러스터를 **먼저 Azure Arc에 연결**한 뒤 센서를 확장으로 배포합니다(센서·정책은 Preview).
-- **센서 없으면** — 이미지 취약성 평가·태세 관리·제어 평면 탐지 같은 **에이전트리스 기능만** 작동하고, 런타임 위협 탐지·바이너리 드리프트·안티맬웨어는 비활성화됩니다.
+### 공통 1단계 — 플랜 활성화
 
-참고: [Containers 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-enable-plan) · [배포 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-deployment-planning) · [AWS 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-aws) · [GCP 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-gcp)
+1. Azure 포털 → **Defender for Cloud** → **환경 설정** → 구독 선택
+2. **Containers** 상태를 **On**
+3. **Settings**에서 구성 요소를 개별 On: **Agentless scanning · Defender sensor**(+ Security Gating·Runtime Anti-Malware) **· Azure Policy 애드온 · K8s API access · Registry access**
+4. **Continue → Save**
+
+> [!NOTE]
+> **Registry access의 Security findings**는 Azure Policy로는 켤 수 없고 반드시 이 Settings에서 직접 토글해야 합니다.
+
+### AKS (Azure) — 별도 커넥터 불필요
+
+- 위 Settings에서 **Defender 센서**(AKS Security profile/DaemonSet)와 **Azure Policy 애드온**을 켜면 **자동 배포**됩니다(수동 배포는 CLI·Helm도 가능). 설치 완료까지 수 시간 걸릴 수 있습니다.
+- **감사 로그 수집은 완전 자동** — Azure 관리형 컨트롤 플레인 통합이라 클러스터에서 감사 로깅을 켤 필요가 없고, **프라이빗 AKS 클러스터도 추가 네트워크·권한 설정이 없습니다.**
+- 권한: 플랜 활성화·확장 배포에 **Owner** 또는 **User Access Administrator**
+
+### EKS (AWS) — 커넥터·CloudFormation·Arc 다단계
+
+1. **환경 설정 → 환경 추가 → Amazon Web Services**로 **AWS 커넥터 생성**(계정 유형·스캔 주기·AWS Account ID, Containers 플랜 선택)
+2. 생성된 **CloudFormation 템플릿을 AWS에 배포** → IAM 역할 자동 생성(`MDCContainersAgentlessDiscoveryK8sRole`, `MDCContainersImageAssessmentRole`, 감사로그용 CloudWatch→Kinesis→S3 역할 등)
+3. Defender for Cloud가 EKS 클러스터를 **Azure Arc-enabled Kubernetes로 자동 등록**
+4. Auto-provisioning이 **Arc 확장으로 Defender 센서·Azure Policy 배포**
+5. **프라이빗 클러스터**는 EKS API 서버에 MDC IP 대역(`172.212.245.192/28`, `48.209.1.192/28`) 허용
+6. 감사 로그 파이프라인(**SQS·Kinesis Data Firehose·S3**)은 AWS에 자동 구성
+
+### GKE (GCP) — 커넥터·gcloud 스크립트·Arc 다단계
+
+1. **환경 설정 → 환경 추가 → Google Cloud Platform**으로 **GCP 커넥터 생성**(프로젝트 ID/번호, Containers 플랜 선택)
+2. 생성된 **gcloud 스크립트를 GCP Cloud Shell에서 실행** → Workload Identity Pool·서비스 계정·역할(`MDCGkeClusterWriteRole` 등) 생성
+3. GKE 클러스터가 **Arc-enabled Kubernetes로 자동 등록**되고 **Arc 확장으로 센서·정책 배포**
+4. **프라이빗 클러스터**는 Master Authorized Networks에 MDC IP 대역 추가
+5. 감사 로그는 **Cloud Logging → Pub/Sub**로 자동 구성
+- 필수 GCP API: `iam`·`sts`·`cloudresourcemanager`·`iamcredentials`·`compute`.googleapis.com
+
+### Arc (온프렘·기타)
+
+1. `az connectedk8s connect`로 클러스터를 **먼저 Azure Arc에 연결**
+2. Defender 센서·Azure Policy를 **Arc Kubernetes 확장**으로 배포(자동 프로비저닝 지원)
+- Linux 커널 **5.4 이상** 필요. **Arc 센서·정책은 Preview** 상태
+
+> [!IMPORTANT]
+> **센서를 배포하지 않으면** 이미지 취약성 평가·태세 관리·제어 평면 탐지 같은 **에이전트리스 기능만** 작동하고, **런타임 위협 탐지·바이너리 드리프트·안티맬웨어·DNS 탐지·XDR 통합**은 비활성화됩니다.
+
+참고: [Containers 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-enable-plan) · [배포 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-deployment-planning) · [AWS 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-aws) · [GCP 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-gcp) · [네트워크 요구사항](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-network-access)
 
 ---
 

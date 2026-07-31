@@ -139,17 +139,48 @@ Microsoft 분석가의 관리형 XDR·프로액티브 헌팅과 **Ask Defender E
 ## 활성화 · 온보딩
 
 > [!NOTE]
-> 구독에서 플랜을 켜는 일반 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 아래는 **Servers 플랜에 고유한 추가 설정**입니다.
+> 구독에서 플랜을 켜는 일반 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 아래는 **Servers 플랜에 고유한** 단계별 설정입니다.
 
-플랜(P1/P2)을 켜면 **MDE 통합·취약성 평가·(P2)에이전트리스 스캔**은 자동 활성화되지만, 다음은 **별도 설정이 필요**합니다.
+### 공통 1단계 — 플랜 활성화 (자동 포함 기능)
 
-- **파일 무결성 모니터링(FIM)** — 기본 **꺼짐**. `환경 설정 → Servers → Settings`에서 켜고 **Log Analytics 워크스페이스를 지정**해야 합니다(P2, MDE 에이전트 전제).
-- **JIT VM 액세스** — 플랜만으로 적용되지 않고 **VM별로 개별 활성화**해야 합니다(NSG/Azure Firewall 필요).
-- **에이전트리스 스캔 예외** — **CMK 암호화 디스크**는 Key Vault에 스캐너 권한을 수동 부여해야 하고, **AWS는 CloudFormation·GCP는 gcloud 스크립트** 배포가 추가로 필요합니다.
-- **비Azure 머신** — 전체 기능은 **Azure Arc** 연결이 전제입니다. Arc 없이 MDE만 직접 온보딩(direct onboarding)하면 **P1 기능 + P2의 프리미엄 MDVM만** 사용 가능합니다.
-- **일 500MB 무료 수집**(P2) — Log Analytics 워크스페이스 연결 설정이 필요합니다.
+1. Azure 포털 → **Defender for Cloud** → **환경 설정** → 구독 선택
+2. **Servers** 스위치 **On** → **Change plans**에서 **Plan 1** 또는 **Plan 2** 선택 → **Confirm** → **Save**
 
-참고: [Servers 플랜 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/tutorial-enable-servers-plan) · [FIM 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/file-integrity-monitoring-enable-defender-endpoint) · [JIT 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-just-in-time-access) · [에이전트리스 스캔](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-agentless-scanning-vms)
+> [!NOTE]
+> 기본값은 **Plan 2**입니다. P1을 원하면 반드시 "Change plans"를 눌러 변경하세요. **P2는 구독 수준으로만 켤 수 있고**(리소스 수준 켜기 불가, 끄기만 가능), P1은 리소스 수준 On/Off가 가능합니다.
+
+플랜을 켜면 **MDE 통합·취약성 평가(P1·P2)·에이전트리스 스캔(P2, Azure VM)** 은 **자동 활성화**됩니다. 아래 기능은 별도 설정이 필요합니다.
+
+### 2단계 — 파일 무결성 모니터링(FIM) · P2 · 기본 꺼짐
+
+1. `환경 설정 → Defender for Servers → Settings → File Integrity Monitoring` 토글 **On**
+2. **Log Analytics 워크스페이스 선택**(기존 또는 신규)
+3. 모니터링할 파일·레지스트리 규칙 선택(필요 시 커스텀 규칙 추가)
+- 전제: P2 활성화 + 머신에 **MDE 에이전트**(Windows 10.8799+/Linux 30.124082+) + 비Azure는 **Arc** + 커스텀 경로용 **에이전트리스 스캔**. 권한: **Workspace Owner + Security Admin**
+
+### 3단계 — JIT VM 액세스 · P2 · VM별 개별 구성
+
+1. `Workload protections → Just-in-time VM access → "Not configured"` 탭
+2. VM 선택 → **Enable JIT on VMs** → 포트 지정(RDP 3389·SSH 22 등) → **Save**
+- **NSG 또는 Azure Firewall이 없으면 지원되지 않습니다**(Unsupported로 분류). PowerShell(`Set-AzJitNetworkAccessPolicy`)·REST API·VM 페이지에서도 구성 가능
+
+### 4단계 — 에이전트리스 스캔 예외 처리
+
+- **CMK 암호화 디스크(Azure)** — Key Vault에 스캐너 서비스 주체(`0c7668b5-3260-4ad0-9f53-34ed54fa19b2`)에 권한 수동 부여: 비RBAC는 `Key Get/Wrap/Unwrap`, RBAC는 **Key Vault Crypto Service Encryption User** 역할
+- **AWS** — Plan Settings에서 On 후 **CloudFormation 템플릿을 AWS에 Stack/StackSet으로 배포**
+- **GCP** — Plan Settings에서 On 후 **gcloud 온보딩 스크립트 실행**
+
+### 5단계 — 비Azure 머신 온보딩
+
+- **권장: Azure Arc 연결** — 온프렘은 Arc-enabled Server로 등록(Connected Machine Agent 설치), AWS/GCP는 멀티클라우드 커넥터가 Arc를 자동 배포. → **P1·P2 전체 기능** 사용 가능
+- **대안: Direct MDE 온보딩(Arc 없이)** — `환경 설정 → Direct onboarding` On. 단, **P1 기능 + P2의 프리미엄 MDVM만** 사용 가능(JIT·FIM·에이전트리스 스캔은 불가). 표시까지 최대 24시간. 권한: 구독 Owner + Entra Security Administrator
+
+> [!TIP]
+> **일 500MB 무료 데이터 수집**(P2)은 Log Analytics 워크스페이스 연결 설정이 필요합니다. FIM 이벤트 등 특정 데이터 타입에 적용됩니다.
+
+**권한 요약**: 플랜 활성화는 Security Admin 또는 구독 Contributor/Owner, **전체 기능 활성화는 Owner** 권장. 에이전트리스 스캔용 역할(VM scanner operator)은 자동 부여됩니다.
+
+참고: [Servers 플랜 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/tutorial-enable-servers-plan) · [FIM 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/file-integrity-monitoring-enable-defender-endpoint) · [JIT 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-just-in-time-access) · [에이전트리스 스캔](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-agentless-scanning-vms) · [Direct 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/onboard-machines-with-defender-for-endpoint)
 
 ---
 

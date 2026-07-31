@@ -80,6 +80,15 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세
 4. **모두 사용(Enable all)** 클릭, 또는 개별 플랜 토글
 5. **저장(Save)**
 
+> [!IMPORTANT]
+> **토글을 켜는 것만으로 끝나지 않는 플랜이 있습니다.** 일부 워크로드 플랜은 이후 **플랜별 추가 온보딩·설정**이 필요합니다. 예:
+> - **APIs** — 플랜 활성화 후 보호할 **API를 개별 온보딩**해야 실제 보호가 시작됩니다.
+> - **Containers** — 런타임 보호에 **센서 배포**가 필요하며, EKS/GKE는 커넥터·스크립트 배포 등 다단계입니다.
+> - **Servers** — FIM·JIT 등은 **기본 꺼짐**이라 별도 구성이 필요합니다.
+> - **Databases** — SQL on Machines는 AMA 프로비저닝·Arc 온보딩이 필요합니다.
+>
+> 각 플랜의 상세 절차는 [03 · CWP](03-cwp.md)의 제품별 페이지 **"활성화 · 온보딩"** 섹션을 참고하세요.
+
 > [!NOTE]
 > **워크스페이스 수준**으로 켤 수 있는 플랜: **Defender for Servers**, **Defender for SQL servers on machines**. Storage·SQL·오픈소스 관계형 DB는 **구독 또는 리소스 수준**으로 켤 수 있습니다.
 

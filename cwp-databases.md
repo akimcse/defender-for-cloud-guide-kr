@@ -61,12 +61,35 @@
 ## 활성화 · 온보딩
 
 > [!NOTE]
-> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. Databases 플랜 토글 하나로 4개 하위 플랜이 함께 켜지며(개별 선택도 가능), **추가 설정이 필요한 것은 아래 두 가지**입니다. **오픈소스 관계형 DB·Cosmos DB는 토글만으로 완료**됩니다(PaaS, 에이전트 불필요).
+> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. Databases 플랜 토글 하나로 **4개 하위 플랜이 함께** 켜집니다(`Select types`로 개별 선택도 가능). **오픈소스 관계형 DB·Cosmos DB는 토글만으로 완료**되고, 추가 설정이 필요한 것은 **SQL on Machines**와 **Azure SQL의 VA 구성**입니다.
+### 공통 1단계 — 플랜 활성화
 
-- **SQL Servers on Machines (IaaS/Arc)** — 가장 복잡합니다. `Settings`에서 **AMA(Azure Monitoring Agent) for SQL 자동 프로비저닝**을 켜고, 온프렘·멀티클라우드는 **Azure Arc 온보딩**이 선행되어야 하며, 관련 확장 차단 해제·아웃바운드 443(`*.<region>.arcdataservices.com`) 허용·배포 확인이 필요합니다. *(레거시 MMA 사용 중이면 AMA로 마이그레이션.)*
-- **Azure SQL 취약성 평가(VA)** — 기본은 **Express 구성**(스토리지 불필요, 자동)입니다. **Classic**으로 전환하면 **Storage 계정 지정·정기 스캔·이메일 알림**을 직접 구성해야 합니다.
+1. Azure 포털 → **Defender for Cloud** → **환경 설정** → 구독 선택
+2. **Databases** 플랜 **On** → **Save** (권한: 구독 **Owner**)
 
-참고: [Databases 플랜 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/tutorial-enable-databases-plan) · [SQL on machines](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-sql-usage) · [SQL VA 구성](https://learn.microsoft.com/en-us/azure/defender-for-cloud/sql-azure-vulnerability-assessment-enable)
+토글 시 4개 하위 플랜(Azure SQL / SQL on Machines / 오픈소스 관계형 DB / Cosmos DB)이 활성화됩니다. 오픈소스 관계형 DB와 Cosmos DB는 여기서 **끝**입니다(PaaS, 에이전트 불필요). 필요 시 개별 DB 리소스의 **Security → Microsoft Defender for Cloud**에서 리소스 수준으로도 켤 수 있습니다.
+
+### 2단계 — SQL Servers on Machines (IaaS/Arc)
+
+1. `환경 설정 → Databases 플랜 → Settings`에서 **"Azure Monitoring Agent for SQL server on machines" 자동 프로비저닝** 토글 **On** → Continue → Save
+2. 온프렘·AWS/GCP 머신은 **Azure Arc 온보딩이 선행**되어야 합니다(Arc SQL Server 인스턴스로 등록)
+3. 다음 **확장이 차단되지 않도록** 확인: `AdvancedThreatProtection.Windows`(Defender for SQL), `SqlIaaSAgent`(IaaS)/`WindowsAgent.SqlServer`(Arc)
+4. **아웃바운드 TCP 443**(TLS)을 `*.<region>.arcdataservices.com`으로 허용
+5. **배포 확인** — 활성화 후 인스턴스 탐지·보호까지 최대 수 시간(약 30분+). 반드시 배포 상태를 검증
+
+> [!WARNING]
+> 레거시 **MMA(Log Analytics Agent)는 2024년 은퇴**했습니다. MMA 기반으로 설정돼 있으면 **AMA 자동 프로비저닝으로 마이그레이션**하고 기존 MMA 토글을 끄세요.
+- 권한: 플랜 배포는 구독 **Owner**, SQL Server 서비스 계정은 각 인스턴스의 **sysadmin** 역할
+
+### 3단계 — Azure SQL 취약성 평가(VA) 구성
+
+- **Express(기본·권장)** — 플랜 활성화 시 **자동**. 별도 스토리지 계정이 필요 없고 상시 스캔됩니다(Azure SQL DB·MI·Synapse).
+- **Classic(레거시)** — 전환하면 **① Storage 계정 지정 ② 정기 스캔 On/Off ③ 스캔 리포트 이메일 수신자**를 직접 구성해야 합니다.
+
+> [!NOTE]
+> Express ↔ Classic 전환 시 **기존 baseline·스캔 이력은 이전되지 않습니다.** VA 설정 변경 권한: Express는 **SQL Security Manager 또는 Security Admin**, Classic은 추가로 **Storage Blob Data Reader + 스토리지 계정 Owner** 필요.
+
+참고: [Databases 플랜 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/tutorial-enable-databases-plan) · [SQL on machines](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-sql-usage) · [AMA 자동 프로비저닝](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-sql-autoprovisioning) · [SQL VA 구성](https://learn.microsoft.com/en-us/azure/defender-for-cloud/sql-azure-vulnerability-assessment-enable)
 
 ---
 
