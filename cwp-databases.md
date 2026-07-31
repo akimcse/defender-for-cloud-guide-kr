@@ -1,4 +1,4 @@
-[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[04 · CWP](04-cwp.md)　·　**Defender for Databases**
+[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[03 · CWP](03-cwp.md)　·　**Defender for Databases**
 
 # Defender for Databases
 
@@ -9,7 +9,7 @@
 > ⏱️ 예상 소요 **6분**
 
 > [!TIP]
-> 섀도우 DB 발견, **공격 경로 분석**, 위험 우선순위화, 리소스 수준 **민감 데이터 인사이트**는 이 플랜이 아니라 **Defender CSPM / DSPM** 소관입니다. → [03 · CSPM](03-cspm.md) 참조. Defender for SQL과 함께 켜면 데이터베이스 컨텍스트가 더해집니다.
+> 섀도우 DB 발견, **공격 경로 분석**, 위험 우선순위화, 리소스 수준 **민감 데이터 인사이트**는 이 플랜이 아니라 **Defender CSPM / DSPM** 소관입니다. → [02 · CSPM](02-cspm.md) 참조. Defender for SQL과 함께 켜면 데이터베이스 컨텍스트가 더해집니다.
 
 ## ① 취약성 평가 (Defender for Azure SQL)
 
@@ -55,6 +55,18 @@
 
 - **대상**: Cosmos DB **NoSQL API 전용**(Cassandra·MongoDB·Table·Gremlin 미지원).
 - **탐지**: SQL 인젝션 변형, 이상 접근(Tor·악성 IP·비정상 위치), 의심스러운 키 목록 조회·데이터 추출. 계정 데이터에 직접 접근하지 않아 **성능 영향 없음**.
+
+---
+
+## 활성화 · 온보딩
+
+> [!NOTE]
+> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. Databases 플랜 토글 하나로 4개 하위 플랜이 함께 켜지며(개별 선택도 가능), **추가 설정이 필요한 것은 아래 두 가지**입니다. **오픈소스 관계형 DB·Cosmos DB는 토글만으로 완료**됩니다(PaaS, 에이전트 불필요).
+
+- **SQL Servers on Machines (IaaS/Arc)** — 가장 복잡합니다. `Settings`에서 **AMA(Azure Monitoring Agent) for SQL 자동 프로비저닝**을 켜고, 온프렘·멀티클라우드는 **Azure Arc 온보딩**이 선행되어야 하며, 관련 확장 차단 해제·아웃바운드 443(`*.<region>.arcdataservices.com`) 허용·배포 확인이 필요합니다. *(레거시 MMA 사용 중이면 AMA로 마이그레이션.)*
+- **Azure SQL 취약성 평가(VA)** — 기본은 **Express 구성**(스토리지 불필요, 자동)입니다. **Classic**으로 전환하면 **Storage 계정 지정·정기 스캔·이메일 알림**을 직접 구성해야 합니다.
+
+참고: [Databases 플랜 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/tutorial-enable-databases-plan) · [SQL on machines](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-sql-usage) · [SQL VA 구성](https://learn.microsoft.com/en-us/azure/defender-for-cloud/sql-azure-vulnerability-assessment-enable)
 
 ---
 

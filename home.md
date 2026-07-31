@@ -15,7 +15,7 @@
 
 - **"Defender for Cloud가 뭔지 빠르게 감 잡고 싶어요"** → [개요 한 장 보기](./00-overview.md) _(약 7분)_
 - **"우리 조직에 도입하려면 뭐가 필요하죠?"** → [사전 준비 · 플랜 · 역할](./01-prerequisites.md) _(약 11분)_
-- **"용어와 동작 원리를 먼저 정리하고 싶어요"** → [핵심 개념](./02-concepts.md) _(약 10분)_
+- **"바로 태세 관리부터 볼게요"** → [CSPM](./02-cspm.md) _(약 15분)_
 
 > [!TIP]
 > 처음이라면 위에서 아래로 순서대로 읽는 것을 권장합니다. 각 페이지 상단에 **학습 목표·예상 소요 시간·대상 독자**가 표시되어, 필요한 부분만 골라 읽기에도 좋습니다.
@@ -27,33 +27,27 @@
 ```mermaid
 flowchart LR
     subgraph P1["Part 1 · 시작하기"]
-        A0["00 개요"] --> A1["01 사전 준비"] --> A2["02 핵심 개념"]
+        A0["00 개요"] --> A1["01 사전 준비"]
     end
     subgraph P2["Part 2 · 핵심 기능 (3대 축)"]
-        B3["03 CSPM"]
-        B4["04 CWP"]
-        B5["05 DevSecOps"]
+        B3["02 CSPM"]
+        B4["03 CWP"]
+        B5["04 DevSecOps"]
     end
-    subgraph P3["Part 3 · 실습·활용"]
-        C6["06 핸즈온 랩"] --> C7["07 실무 활용"]
-    end
-    P1 --> P2 --> P3
+    P1 --> P2
 
-    click A0 "./00-overview.md" "00 개요"
-    click A1 "./01-prerequisites.md" "01 사전 준비"
-    click A2 "./02-concepts.md" "02 핵심 개념"
-    click B3 "./03-cspm.md" "03 CSPM"
-    click B4 "./04-cwp.md" "04 CWP"
-    click B5 "./05-devsecops.md" "05 DevSecOps"
-    click C6 "./06-handson-lab.md" "06 핸즈온 랩"
-    click C7 "./07-use-cases.md" "07 실무 활용"
+    click A0 "#/00-overview" "00 개요"
+    click A1 "#/01-prerequisites" "01 사전 준비"
+    click B3 "#/02-cspm" "02 CSPM"
+    click B4 "#/03-cwp" "03 CWP"
+    click B5 "#/04-devsecops" "04 DevSecOps"
 
     classDef node fill:#eef4ff,stroke:#2f6fd6,color:#123,stroke-width:1px;
-    class A0,A1,A2,B3,B4,B5,C6,C7 node;
+    class A0,A1,B3,B4,B5 node;
 ```
 
 > [!TIP]
-> 위 다이어그램의 각 노드를 클릭하면 해당 페이지로 이동합니다. 전 과정(Part 1~3)이 공개되어 있습니다.
+> 위 다이어그램의 각 노드를 클릭하면 해당 페이지로 이동합니다.
 
 ---
 
@@ -64,23 +58,19 @@ flowchart LR
 | 페이지 | 이 페이지의 핵심 | 소요 |
 | --- | --- | --- |
 | [**00 · 개요**](./00-overview.md) | CNAPP의 정의, 3대 축(CSPM·CWP·DevSecOps), 멀티클라우드/하이브리드, Defender 포털·XDR 통합, 동작 원리 | 7분 |
-| [**01 · 사전 준비**](./01-prerequisites.md) | 기본 CSPM vs Defender 플랜, 전체 Defender 플랜 목록, 온보딩(Azure·AWS·GCP·Arc), **역할·RBAC**, 데이터 지역 | 11분 |
-| [**02 · 핵심 개념**](./02-concepts.md) | 보안 점수·권장사항·정책/MCSB·클라우드 보안 그래프/공격 경로·경고/인시던트·규정 준수·워크플로 자동화 등 | 10분 |
+| [**01 · 사전 준비**](./01-prerequisites.md) | 기본 CSPM vs 유료 플랜, 전체 Defender for Cloud 플랜 목록, 온보딩(Azure·AWS·GCP·Arc), **역할·RBAC**, 데이터 지역 | 11분 |
 
 ### Part 2 · 핵심 기능 — _실제로 무엇을 할 수 있는가_
 
 | 페이지 | 이 페이지의 핵심 | 소요 |
 | --- | --- | --- |
-| [**03 · CSPM**](./03-cspm.md) | 보안 점수·권장사항·거버넌스·공격 경로·DSPM·CIEM·AI-SPM·규정 준수 등 태세 관리 심화 | 15분 |
-| [**04 · CWP**](./04-cwp.md) | Servers·Storage·Databases·Containers·App Service·Key Vault·Resource Manager·APIs·AI 등 워크로드별 위협 보호 | 15분 |
-| [**05 · DevSecOps**](./05-devsecops.md) | 코드 투 클라우드, GitHub·Azure DevOps·GitLab 커넥터, IaC/시크릿 스캔, PR 주석 | 13분 |
+| [**02 · CSPM**](./02-cspm.md) | 보안 점수·권장사항·거버넌스·공격 경로·DSPM·CIEM·AI-SPM·규정 준수 등 태세 관리 심화 | 15분 |
+| [**03 · CWP**](./03-cwp.md) | Servers·Storage·Databases·Containers·App Service·Key Vault·Resource Manager·APIs·AI 등 워크로드별 위협 보호 | 15분 |
+| [**04 · DevSecOps**](./04-devsecops.md) | 코드 투 클라우드, GitHub·Azure DevOps·GitLab 커넥터, IaC/시크릿 스캔, PR 주석 | 13분 |
 
-### Part 3 · 실습과 활용 — _직접 해보고, 현업에 적용하고, 막히면 찾아보기_
+### Part 3 · 실습과 활용 — _준비 중_
 
-| 페이지 | 이 페이지의 핵심 | 소요 |
-| --- | --- | --- |
-| [**06 · 핸즈온 랩**](./06-handson-lab.md) | 실제 포털에서 온보딩 → 보안 점수 → 권장사항 수정 → 규정 준수까지 30분 실습 | 30분 |
-| [**07 · 실무 활용**](./07-use-cases.md) | CSPM·CWP·DevSecOps **3대 축 데모 시나리오**(고객 데모용 한국어 내레이션) | 30분+ |
+> 🚧 **핸즈온 랩·실무 활용 데모는 업데이트 준비 중입니다.** 곧 공개될 예정입니다.
 
 ---
 
@@ -88,10 +78,10 @@ flowchart LR
 
 | 역할 | 추천 순서 | 왜 |
 | --- | --- | --- |
-| **클라우드 보안 엔지니어** | 00 → 02 → 03 → 04 → 06 | 태세·워크로드 보호를 개념부터 실습까지 |
-| **보안/IT 관리자 · 도입 담당** | 01 → 00 → 03 → 07 | 온보딩 요건·플랜·역할, 운영 시나리오 |
-| **DevSecOps / 플랫폼 엔지니어** | 00 → 05 → 02 → 06 | 코드 투 클라우드, 파이프라인 보안 |
-| **SOC 분석가 / 위협 헌터** | 02 → 04 → 06 → 07 | 경고·인시던트·공격 경로 조사, XDR 통합 헌팅 |
+| **클라우드 보안 엔지니어** | 00 → 02 → 03 → 04 | 태세·워크로드 보호를 개념부터 심화까지 |
+| **보안/IT 관리자 · 도입 담당** | 01 → 00 → 03 | 온보딩 요건·플랜·역할, 워크로드 보호 |
+| **DevSecOps / 플랫폼 엔지니어** | 00 → 04 → 02 | 코드 투 클라우드, 파이프라인 보안 |
+| **SOC 분석가 / 위협 헌터** | 02 → 03 → 04 | 경고·인시던트·공격 경로 조사, XDR 통합 |
 | **CISO / 의사결정자** | 00 → 03 → 01 | 가치·태세·거버넌스·비용을 큰 그림으로 |
 
 ---

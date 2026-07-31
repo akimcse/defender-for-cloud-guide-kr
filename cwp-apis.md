@@ -1,4 +1,4 @@
-[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[04 · CWP](04-cwp.md)　·　**Defender for APIs**
+[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[03 · CWP](03-cwp.md)　·　**Defender for APIs**
 
 # Defender for APIs
 
@@ -9,7 +9,7 @@
 > ⏱️ 예상 소요 **5분**
 
 > [!TIP]
-> **공격 경로 분석**(백엔드 워크로드·데이터·AI 앱으로의 측면 이동·데이터 유출 경로)은 **Defender CSPM**의 Cloud Security Graph 기능입니다. Defender for APIs를 CSPM과 함께 켜면 조직 전반의 API 노출 위험을 그래프로 분석할 수 있습니다. → [03 · CSPM](03-cspm.md)
+> **공격 경로 분석**(백엔드 워크로드·데이터·AI 앱으로의 측면 이동·데이터 유출 경로)은 **Defender CSPM**의 Cloud Security Graph 기능입니다. Defender for APIs를 CSPM과 함께 켜면 조직 전반의 API 노출 위험을 그래프로 분석할 수 있습니다. → [02 · CSPM](02-cspm.md)
 
 ## ① API 발견 · 태세 이해
 
@@ -45,6 +45,20 @@
 ## 과금 모델
 
 구독 수준에서 **월간 모니터링된 API 트래픽(호출 수)** 기준으로 과금됩니다. **5단계 요금제**가 있으며 각 플랜의 엔타이틀먼트 한도가 다릅니다. 기본은 **Plan 1**(월 100만 호출 한도)이므로, 트래픽이 많은 구독은 상위 플랜 선택으로 초과 과금을 방지하세요.
+
+---
+
+## 활성화 · 온보딩
+
+> [!IMPORTANT]
+> **플랜 토글만으로는 단 하나의 API도 보호되지 않습니다.** 활성화는 **2단계**입니다.
+
+1. **플랜 활성화(구독 수준)** — `환경 설정 → APIs`에서 켜고, **5단계 요금제 중 적정 플랜을 선택**합니다. 기본은 **Plan 1(월 100만 호출)** 이라 트래픽이 많으면 초과 요금이 발생할 수 있습니다(APIM Metrics로 사전 측정 권장).
+2. **API 온보딩(필수)** — `Recommendations → "Azure API Management APIs should be onboarded to Defender for APIs"` 권장사항에서 보호할 API를 선택하고 **Fix**합니다. 이 단계를 마쳐야 실제 보호·탐지가 시작됩니다(대시보드 반영 최대 ~50분).
+
+전제: API가 **Azure API Management**에 게시된 **REST API**여야 하며, self-hosted gateway·workspaces는 제외됩니다. 온보딩에는 **API Management Service Contributor** 권한이 필요합니다.
+
+참고: [APIs 배포·온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-deploy) · [전제조건·지원 범위](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-apis-prepare)
 
 ---
 

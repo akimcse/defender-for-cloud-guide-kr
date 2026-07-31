@@ -1,4 +1,4 @@
-[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[04 · CWP](04-cwp.md)　·　**Defender for Containers**
+[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[03 · CWP](03-cwp.md)　·　**Defender for Containers**
 
 # Defender for Containers
 
@@ -27,7 +27,7 @@
 - **컴플라이언스** — 업계 표준(CIS·PCI DSS·NIST 등) 기준 벤치마킹으로 감사 간소화·규정 준수 확인.
 
 > [!TIP]
-> **공격 경로 분석**과 **클라우드 보안 탐색기**(그래프 기반 위험 헌팅)는 **Defender CSPM** 플랜의 기능입니다. Defender for Containers는 취약성 데이터를 그래프에 제공하며, CSPM을 함께 켜면 컨테이너 자산의 공격 경로를 분석할 수 있습니다. → [03 · CSPM](03-cspm.md)
+> **공격 경로 분석**과 **클라우드 보안 탐색기**(그래프 기반 위험 헌팅)는 **Defender CSPM** 플랜의 기능입니다. Defender for Containers는 취약성 데이터를 그래프에 제공하며, CSPM을 함께 켜면 컨테이너 자산의 공격 경로를 분석할 수 있습니다. → [02 · CSPM](02-cspm.md)
 
 ## ③ 런타임 위협 방어 (센서)
 
@@ -58,6 +58,20 @@
 
 - **원클릭 온보딩** — Defender 센서는 **AKS 보안 프로필**로 네이티브 배포되어 즉시 커버리지를 제공합니다.
 - 센서 기반 추가 기능: **안티맬웨어**, **DNS 탐지**. AKS는 GA, **Arc K8s 센서는 Preview**. 취약성 발견 결과는 **Microsoft 인증서로 서명**됩니다.
+
+---
+
+## 활성화 · 온보딩
+
+> [!NOTE]
+> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 플랜 토글은 **시작점**일 뿐, 런타임 보호는 **센서 배포**가 있어야 작동합니다. 환경별 작업량이 크게 다릅니다.
+
+- **AKS (Azure)** — 별도 커넥터 불필요. `환경 설정 → Containers → Settings`에서 **Defender 센서·Azure Policy 애드온**을 켜면 자동 배포됩니다(감사 로그 수집은 완전 자동, 프라이빗 클러스터도 추가 설정 없음).
+- **EKS·GKE (멀티클라우드)** — 훨씬 많은 단계: **AWS/GCP 커넥터 생성 → CloudFormation(AWS)·gcloud 스크립트(GCP) 배포 → Azure Arc 자동 등록 → Arc 확장으로 센서 배포**. 프라이빗 클러스터는 MDC IP 대역(`172.212.245.192/28` 등) 허용이 필요합니다.
+- **Arc(온프렘)** — 클러스터를 **먼저 Azure Arc에 연결**한 뒤 센서를 확장으로 배포합니다(센서·정책은 Preview).
+- **센서 없으면** — 이미지 취약성 평가·태세 관리·제어 평면 탐지 같은 **에이전트리스 기능만** 작동하고, 런타임 위협 탐지·바이너리 드리프트·안티맬웨어는 비활성화됩니다.
+
+참고: [Containers 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-enable-plan) · [배포 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-containers-deployment-planning) · [AWS 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-aws) · [GCP 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-gcp)
 
 ---
 

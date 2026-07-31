@@ -1,4 +1,4 @@
-[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[04 · CWP](04-cwp.md)　·　**Defender for Servers**
+[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[03 · CWP](03-cwp.md)　·　**Defender for Servers**
 
 # Defender for Servers
 
@@ -136,6 +136,23 @@ Microsoft 분석가의 관리형 XDR·프로액티브 헌팅과 **Ask Defender E
 
 ---
 
+## 활성화 · 온보딩
+
+> [!NOTE]
+> 구독에서 플랜을 켜는 일반 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 아래는 **Servers 플랜에 고유한 추가 설정**입니다.
+
+플랜(P1/P2)을 켜면 **MDE 통합·취약성 평가·(P2)에이전트리스 스캔**은 자동 활성화되지만, 다음은 **별도 설정이 필요**합니다.
+
+- **파일 무결성 모니터링(FIM)** — 기본 **꺼짐**. `환경 설정 → Servers → Settings`에서 켜고 **Log Analytics 워크스페이스를 지정**해야 합니다(P2, MDE 에이전트 전제).
+- **JIT VM 액세스** — 플랜만으로 적용되지 않고 **VM별로 개별 활성화**해야 합니다(NSG/Azure Firewall 필요).
+- **에이전트리스 스캔 예외** — **CMK 암호화 디스크**는 Key Vault에 스캐너 권한을 수동 부여해야 하고, **AWS는 CloudFormation·GCP는 gcloud 스크립트** 배포가 추가로 필요합니다.
+- **비Azure 머신** — 전체 기능은 **Azure Arc** 연결이 전제입니다. Arc 없이 MDE만 직접 온보딩(direct onboarding)하면 **P1 기능 + P2의 프리미엄 MDVM만** 사용 가능합니다.
+- **일 500MB 무료 수집**(P2) — Log Analytics 워크스페이스 연결 설정이 필요합니다.
+
+참고: [Servers 플랜 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/tutorial-enable-servers-plan) · [FIM 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/file-integrity-monitoring-enable-defender-endpoint) · [JIT 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-just-in-time-access) · [에이전트리스 스캔](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-agentless-scanning-vms)
+
+---
+
 ## 참고 링크
 
 - [Defender for Servers 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-servers-overview)
@@ -149,6 +166,6 @@ Microsoft 분석가의 관리형 XDR·프로액티브 헌팅과 **Ask Defender E
 
 | ◀ 이전 | ▶ 다음 |
 | :-- | --: |
-| [04 · CWP 개요](04-cwp.md) | [Storage →](cwp-storage.md) |
+| [03 · CWP 개요](03-cwp.md) | [Storage →](cwp-storage.md) |
 
 [🏠 전체 목차로 돌아가기](README.md)

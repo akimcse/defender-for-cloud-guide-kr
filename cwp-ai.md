@@ -1,4 +1,4 @@
-[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[04 · CWP](04-cwp.md)　·　**Defender for AI Services**
+[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[03 · CWP](03-cwp.md)　·　**Defender for AI Services**
 
 # Defender for AI Services
 
@@ -9,7 +9,7 @@
 > ⏱️ 예상 소요 **6분**
 
 > [!IMPORTANT]
-> - **AI 태세 관리(AI-SPM)** — AI 자산 인벤토리, 취약성·구성 오류, AI 공격 경로 분석은 이 플랜이 아니라 **Defender CSPM** 소관입니다. → [03 · CSPM §11 AI-SPM](03-cspm.md) 참조.
+> - **AI 태세 관리(AI-SPM)** — AI 자산 인벤토리, 취약성·구성 오류, AI 공격 경로 분석은 이 플랜이 아니라 **Defender CSPM** 소관입니다. → [02 · CSPM §11 AI-SPM](02-cspm.md) 참조.
 > - **가용성** — **상용 클라우드 전용**(Azure Government·21Vianet·연결된 AWS 계정 미지원). **30일 무료 체험**(체험 기간 통틀어 **750억 토큰** 캡 — 30일 이내라도 캡 도달 시 과금 시작). 구독 수준 활성화에 **Owner** 역할 필요.
 
 ## ① 실시간 위협 탐지 (Activity monitoring)
@@ -70,6 +70,20 @@ Azure AI Content Safety **Prompt Shields**가 앱에서 탈옥·프롬프트 공
 > [!NOTE]
 > **관리 디바이스의 로컬 AI 에이전트 보호**(코딩 CLI·에이전틱 IDE·데스크톱 AI 어시스턴트·로컬 AI 런타임 발견, 인라인 런타임 차단)는 Defender for Cloud가 아니라 **Defender XDR 엔드포인트 보안** 및 [Microsoft Agent 365](https://learn.microsoft.com/en-us/microsoft-agent-365/overview) 소관입니다.
 
+## 활성화 · 온보딩
+
+> [!NOTE]
+> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 플랜을 켠 뒤 **하위 컴포넌트를 추가로 켜야** 실제 운영에 쓸 수 있습니다.
+
+- **플랜 활성화** — `환경 설정 → AI services`를 켭니다(활동 모니터링·경고는 이때 자동). 활성화에 구독 **Owner/Contributor** 필요.
+- **하위 컴포넌트(별도 토글)** — `Settings`에서 **Suspicious Prompt Evidence**(끄면 경고의 프롬프트 내용이 마스킹됨), **Data Security for AI**(Microsoft Purview **별도 라이선스** 필요), **AI Model Security**를 각각 켭니다.
+- **사용자 컨텍스트(선택·코드 변경)** — 경고를 사용자·IP 단위로 상관하려면 개발자가 Azure OpenAI API 호출에 **`UserSecurityContext`** 파라미터를 추가해야 합니다(**Azure OpenAI REST 전용**, Model Inference API 미지원).
+- **가용성** — 상용 클라우드 전용, **30일 / 750억 토큰** 무료 체험(초과 시 과금).
+
+참고: [AI 위협 보호 사용 설정](https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-onboarding) · [사용자 컨텍스트](https://learn.microsoft.com/en-us/azure/defender-for-cloud/gain-end-user-context-ai)
+
+---
+
 ## 참고 링크
 
 - [AI 위협 보호](https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-threat-protection) · [AI 워크로드 경고 참조](https://learn.microsoft.com/en-us/azure/defender-for-cloud/alerts-ai-workloads)
@@ -82,6 +96,6 @@ Azure AI Content Safety **Prompt Shields**가 앱에서 탈옥·프롬프트 공
 
 | ◀ 이전 | ▶ 다음 |
 | :-- | --: |
-| [APIs](cwp-apis.md) | [04 · CWP 개요](04-cwp.md) |
+| [APIs](cwp-apis.md) | [03 · CWP 개요](03-cwp.md) |
 
 [🏠 전체 목차로 돌아가기](README.md)

@@ -1,4 +1,4 @@
-[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[04 · CWP](04-cwp.md)　·　**Defender for Storage**
+[🏠 전체 목차](README.md)　·　**Part 2 · 핵심 기능**　·　[03 · CWP](03-cwp.md)　·　**Defender for Storage**
 
 # Defender for Storage
 
@@ -9,7 +9,7 @@
 > ⏱️ 예상 소요 **6분**
 
 > [!TIP]
-> 스토리지 계정의 **태세 위험**(잘못된 구성·과도한 권한·공격 경로·인터넷 노출·민감 데이터 발견)은 이 플랜이 아니라 **Defender CSPM / DSPM** 소관입니다. → [03 · CSPM](03-cspm.md) 참조. Defender for Storage와 함께 켜면 위협 탐지에 민감 데이터 컨텍스트가 더해집니다.
+> 스토리지 계정의 **태세 위험**(잘못된 구성·과도한 권한·공격 경로·인터넷 노출·민감 데이터 발견)은 이 플랜이 아니라 **Defender CSPM / DSPM** 소관입니다. → [02 · CSPM](02-cspm.md) 참조. Defender for Storage와 함께 켜면 위협 탐지에 민감 데이터 컨텍스트가 더해집니다.
 
 ## ① 위협 탐지 · 대응
 
@@ -66,10 +66,18 @@ Microsoft Defender Antivirus(MDAV) 기반으로 **업로드 시 + 온디맨드**
 
 업로드된 파일 해시를 알려진 악성코드 해시와 비교해 전체 스캔 없이 신속 탐지합니다(*Put Block/Put Block List·SMB 파일 공유 미지원*).
 
-## 활성화 · 운영
+## 활성화 · 온보딩
 
-- **원클릭 활성화** — 구독 또는 스토리지 계정 수준으로 켭니다(기존·미래 계정 자동 보호). **스토리지 계정 생성 과정에 통합**되어, 체크박스 하나로 신규 계정을 곧바로 보호합니다(기본값 미구성으로 인한 사각지대 제거). Terraform·Bicep·ARM·PowerShell·REST API·Azure Policy로 대규모 자동화 가능.
-- **클래식 플랜** 사용 중이면 신규 기능을 위해 **신규 플랜으로 마이그레이션**이 필요합니다.
+> [!NOTE]
+> 일반 활성화 절차는 [01 · 사전 준비](01-prerequisites.md)를 참고하세요. 아래는 **Storage 플랜 고유** 설정입니다.
+
+- **원클릭 활성화** — 구독 또는 스토리지 계정 수준으로 켜면 기존·미래 계정이 자동 보호됩니다. **스토리지 계정 생성 과정에 통합**되어 체크박스 하나로 신규 계정을 곧바로 보호할 수 있고, Terraform·Bicep·ARM·PowerShell·REST API·Azure Policy로 대규모 자동화가 가능합니다. 켜면 **활동 모니터링·악성코드 스캔·민감 데이터 위협 탐지가 기본 ON**입니다.
+- **악성코드 스캔 비용 통제** — **GB당 과금**이라 월 스캔 상한(기본 **10,000GB/계정**)을 확인하세요. 활성화 시 **Event Grid 시스템 토픽·StorageDataScanner** 등이 자동 배포되며, 삭제·수정하면 스캔이 멈출 수 있습니다.
+- **스캔 결과 연동(선택)** — 자동화가 필요하면 **Event Grid 커스텀 토픽**(동일 리전·공개 액세스)이나 **Log Analytics 워크스페이스**를 별도 구성합니다. 악성 파일 **소프트 삭제**도 선택 활성화입니다.
+- **계정별 재정의** — 구독 설정과 다르게 하려면 계정 설정에서 **"구독 수준 설정 재정의"를 먼저 켜야** 합니다(안 켜면 구독 설정으로 덮어써짐).
+- **클래식 플랜 마이그레이션** — 2025-02-05 이후 클래식 플랜은 신규 활성화 불가. 사용 중이면 신규 플랜으로 마이그레이션(구형 정책 비활성화 선행)이 필요합니다.
+
+참고: [Storage 활성화](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-azure-portal-enablement) · [악성코드 스캔 고급 설정](https://learn.microsoft.com/en-us/azure/defender-for-cloud/advanced-configurations-for-malware-scanning) · [클래식 마이그레이션](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-classic-migrate)
 
 ---
 

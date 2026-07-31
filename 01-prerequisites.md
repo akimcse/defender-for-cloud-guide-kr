@@ -1,4 +1,4 @@
-[🏠 전체 목차](./README.md)　·　**Part 1 · 시작하기**　·　페이지 2 / 8
+[🏠 전체 목차](./README.md)　·　**Part 1 · 시작하기**　·　페이지 2 / 5
 
 # 01 · 사전 준비 — 플랜 · 온보딩 · 역할/RBAC
 
@@ -12,7 +12,7 @@
 >
 > ⏱️ 예상 소요 **11분**　·　🎯 대상: 보안/IT 관리자, 도입 담당자, 클라우드 엔지니어
 
-Defender for Cloud 온보딩은 **① 구독에서 MDC 열기(기본 CSPM 자동 활성화) → ② 필요한 유료 플랜 켜기 → ③ 멀티클라우드/온프렘 커넥터 구성** 순으로 진행합니다. 각 단계에는 적절한 **Azure RBAC 역할**이 전제되므로(§5), 시작 전 역할 배분을 함께 계획하세요. 이 페이지는 온보딩 사전 준비를 정리합니다.
+Defender for Cloud 온보딩은 **① 구독에서 MDC 열기(기본 CSPM 자동 활성화) → ② 필요한 유료 플랜 켜기 → ③ 멀티클라우드/온프렘 커넥터 구성** 순으로 진행합니다. 각 단계에는 적절한 **Azure RBAC 역할**이 전제되므로(§4), 시작 전 역할 배분을 함께 계획하세요. 이 페이지는 온보딩 사전 준비를 정리합니다.
 
 ---
 
@@ -22,7 +22,7 @@ Defender for Cloud 온보딩은 **① 구독에서 MDC 열기(기본 CSPM 자동
 
 <img width="1835" height="855" alt="image" src="https://github.com/user-attachments/assets/7d78a239-f636-42a2-92e3-2fd5ec3cd79f" />
 
-Microsoft Defender for Cloud를 켜면 별도 구독 없이**기본 CSPM(태세 관리)** 과 **Microsoft Defender XDR 접근**이 자동으로 제공됩니다. 아래 기능이 여기에 포함되며, 공격 경로 분석·DSPM·워크로드 위협 탐지 같은 심화 기능은 유료 플랜(**Defender CSPM** 또는 워크로드 Defender 플랜)에서 제공됩니다.
+Microsoft Defender for Cloud를 켜면 별도 구독 없이 **기본 CSPM(태세 관리)** 과 **Microsoft Defender XDR 접근**이 자동으로 제공됩니다. 아래 기능이 여기에 포함되며, 공격 경로 분석·DSPM·워크로드 위협 탐지 같은 심화 기능은 유료 플랜(**Defender CSPM** 또는 워크로드 Defender 플랜)에서 제공됩니다.
 
 - 보안 점수(Secure Score)
 - 자산 인벤토리(Asset inventory)
@@ -41,22 +41,7 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이**기본 CSPM(태세 
 > [!TIP]
 > 정확한 단가는 정책상 여기서 재현하지 않습니다. 최신 금액은 [Defender for Cloud 가격 페이지](https://azure.microsoft.com/pricing/details/defender-for-cloud/)와 [비용 계산기](https://learn.microsoft.com/en-us/azure/defender-for-cloud/cost-calculator)에서 확인하세요.
 
-### 활성화 방법 (Azure 포털)
-
-<img width="1572" height="776" alt="image" src="https://github.com/user-attachments/assets/a22530c7-39b0-49bb-8423-724df09eb09f" />
-
-1. **Azure 포털**(portal.azure.com) 로그인 → **Microsoft Defender for Cloud** 검색·선택
-2. 메뉴에서 **환경 설정(Environment settings)**
-3. 보호할 **구독 또는 워크스페이스** 선택
-4. **모두 사용(Enable all)** 클릭, 또는 개별 플랜 토글
-5. **저장(Save)**
-
-> [!NOTE]
-> **워크스페이스 수준**으로 켤 수 있는 플랜: **Defender for Servers**, **Defender for SQL servers on machines**. Storage·SQL·오픈소스 관계형 DB는 **구독 또는 리소스 수준**으로 켤 수 있습니다.
-
-참고: [Azure 구독 연결](https://learn.microsoft.com/en-us/azure/defender-for-cloud/connect-azure-subscription) · [향상된 보안 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-enhanced-security)
-
-## 2. 전체 Defender 플랜 목록
+### 전체 Defender for Cloud 플랜 목록
 
 각 플랜의 상세 기능은 Part 2(CSPM·CWP·DevSecOps)에서 다룹니다.
 
@@ -85,7 +70,22 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이**기본 CSPM(태세 
 > - **P2**: 구독 수준으로 활성화, 리소스별로 끌 수는 있으나 리소스 수준으로만 켤 수는 없음. **에이전트리스 스캔·악성코드 스캔·FIM·JIT** 등 고급 기능 포함
 > 참고: [Defender for Servers 개요](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-servers-overview)
 
-## 3. 멀티클라우드 온보딩
+### 유료 플랜 활성화 방법 (Azure 포털)
+
+<img width="1572" height="776" alt="image" src="https://github.com/user-attachments/assets/a22530c7-39b0-49bb-8423-724df09eb09f" />
+
+1. **Azure 포털**(portal.azure.com) 로그인 → **Microsoft Defender for Cloud** 검색·선택
+2. 메뉴에서 **환경 설정(Environment settings)**
+3. 보호할 **구독 또는 워크스페이스** 선택
+4. **모두 사용(Enable all)** 클릭, 또는 개별 플랜 토글
+5. **저장(Save)**
+
+> [!NOTE]
+> **워크스페이스 수준**으로 켤 수 있는 플랜: **Defender for Servers**, **Defender for SQL servers on machines**. Storage·SQL·오픈소스 관계형 DB는 **구독 또는 리소스 수준**으로 켤 수 있습니다.
+
+참고: [Azure 구독 연결](https://learn.microsoft.com/en-us/azure/defender-for-cloud/connect-azure-subscription) · [향상된 보안 사용](https://learn.microsoft.com/en-us/azure/defender-for-cloud/enable-enhanced-security)
+
+## 2. 멀티클라우드 온보딩
 
 ### AWS 커넥터 (GA — 정부 클라우드 제외)
 
@@ -113,7 +113,7 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이**기본 CSPM(태세 
 
 <img width="2525" height="1120" alt="image" src="https://github.com/user-attachments/assets/3d16bd2f-7e21-419e-b080-7c84fabffdfa" />
 <img width="1860" height="915" alt="image" src="https://github.com/user-attachments/assets/87a97e1f-8bff-4b7b-9ac2-4945760d8486" />
-<img width="2582" height="1862" alt="image" src="https://github.com/user-attachments/assets/e46d8491-2438-493b-9ab5-57ddc09f08a6" />
+<img width="2582" height="1862" alt="image" src="https://github.com/user-attachments/assets/e46d8491-2438-493b-9ab5-57dc09f08a6a" />
 
 1. Azure 포털 → MDC → **환경 설정** → **환경 추가** → **Google Cloud Platform**
 2. Azure 구독·리소스 그룹·위치·스캔 주기 설정
@@ -133,7 +133,7 @@ Microsoft Defender for Cloud를 켜면 별도 구독 없이**기본 CSPM(태세 
 
 참고: [온프렘/Arc 온보딩](https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-machines)
 
-## 4. 데이터 수집 · Log Analytics 워크스페이스
+## 3. 데이터 수집 · Log Analytics 워크스페이스
 
 Defender for Cloud는 세 가지 방식으로 데이터를 수집합니다.
 
@@ -152,7 +152,7 @@ Defender for Cloud는 세 가지 방식으로 데이터를 수집합니다.
 
 참고: [모니터링 구성 요소](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components) · [Servers 데이터 워크스페이스 계획](https://learn.microsoft.com/en-us/azure/defender-for-cloud/plan-defender-for-servers-data-workspace)
 
-## 5. 역할 및 권한 (Azure RBAC)
+## 4. 역할 및 권한 (Azure RBAC)
 
 Defender for Cloud는 **Azure RBAC**를 사용합니다. 전용 역할 2종과 표준 Azure 역할(Contributor/Owner)이 함께 쓰입니다.
 
@@ -191,7 +191,7 @@ Defender for Cloud는 **Azure RBAC**를 사용합니다. 전용 역할 2종과 �
 
 참고: [모니터링 구성 요소](https://learn.microsoft.com/en-us/azure/defender-for-cloud/monitoring-components)
 
-## 6. Microsoft Defender XDR 통합 요구사항
+## 5. Microsoft Defender XDR 통합 요구사항
 
 Defender for Cloud를 켜면 경고·인시던트가 **Microsoft Defender 포털(security.microsoft.com)** 의 통합 XDR 경험으로 자동 연동됩니다(→ [00 · 개요](./00-overview.md)). 이 통합을 실제로 조회·활용하려면 다음이 필요합니다.
 
@@ -209,7 +209,7 @@ Defender for Cloud를 켜면 경고·인시던트가 **Microsoft Defender 포털
 
 참고: [Defender XDR 통합](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-integration-365)
 
-## 7. 데이터 지역 · 리전 · 정부 클라우드
+## 6. 데이터 지역 · 리전 · 정부 클라우드
 
 - **자산 데이터 저장 위치**는 VM 지리에 따라 가장 가까운 워크스페이스로 라우팅됩니다. (예: **한국(Korea) → Asia Pacific**, 영국 → 영국, 유럽(영국 제외) → 유럽)
 - **태세 데이터**는 테넌트 위치 기준으로 저장됩니다(유럽 테넌트는 유럽 위치).
@@ -250,6 +250,6 @@ Defender for Cloud를 켜면 경고·인시던트가 **Microsoft Defender 포털
 
 | ◀ 이전 | ▶ 다음 |
 | :-- | --: |
-| [00 · 개요](./00-overview.md) | [02 · 핵심 개념](./02-concepts.md) |
+| [00 · 개요](./00-overview.md) | [02 · CSPM](./02-cspm.md) |
 
 [🏠 전체 목차로 돌아가기](./README.md)
