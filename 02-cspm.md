@@ -197,9 +197,6 @@ VM 디스크 스냅샷을 대역 외로 분석 후 **수 분 내 삭제**합니�
 ![규정 준수 대시보드 — MCSB 컨트롤별 자동 평가](assets/cspm/regulatory-compliance.png)
 <small class="cap">MCSB 등 표준의 컨트롤별 pass/fail과 자동 평가(Automated assessments), 컨트롤 상세의 Your Actions·실패 리소스 수</small>
 
-> [!TIP]
-> 한국 고객 데모·컨설팅에서는 **k-ISMS-P**, **ISO/IEC 27001:2022**, **PCI DSS**를 표준으로 추가해 보여 주면 전달력이 높습니다.
-
 참고: [규정 준수 대시보드](https://learn.microsoft.com/en-us/azure/defender-for-cloud/regulatory-compliance-dashboard) · [규정 준수 표준](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-regulatory-compliance-standards)
 
 ## 11. AI 보안 태세 관리 (AI-SPM)
