@@ -15,8 +15,6 @@
     - [AI Services](cwp-ai.md)<span class="t">6분</span>
   - [04 · DevSecOps](04-devsecops.md)<span class="t">13분</span>
 
-<!-- Part 3 · 실습·활용 — 추후 업데이트 예정, 임시 비활성화
-- **Part 3 · 실습·활용**
-  - [05 · 핸즈온 랩](05-handson-lab.md)<span class="t">30분</span>
-  - [06 · 실무 활용](06-use-cases.md)<span class="t">30분+</span>
--->
+- **Part 3 · 운영 통합**
+  - [05 · 로그 내보내기 · 조회하기](05-log-export.md)<span class="t">10분</span>
+  - [06 · 경고 알림 자동화](06-notifications.md)<span class="t">10분</span>

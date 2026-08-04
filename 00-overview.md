@@ -1,4 +1,4 @@
-[🏠 전체 목차](./README.md)　·　**Part 1 · 시작하기**　·　페이지 1 / 5
+[🏠 전체 목차](./README.md)　·　**Part 1 · 시작하기**　·　페이지 1 / 7
 
 # 00 · 개요 — Microsoft Defender for Cloud란?
 
